@@ -1,0 +1,5 @@
+server=https://www.openml.org/api/v1
+confirm.upload=TRUE
+cachedir=/tmp/RtmpNXyVRZ/cache
+verbosity=1
+arff.reader=farff

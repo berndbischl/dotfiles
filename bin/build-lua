@@ -1,0 +1,2 @@
+make linux
+make install INSTALL_TOP=/home/bischl/local_software/lua

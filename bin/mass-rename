@@ -1,0 +1,73 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
+""" 
+Does the following renaming of files
+- converts to lower case
+- converts german umlaute to eg ue
+- removes a bunch of special chars which usually cause problems
+- converts spaces to underscores
+"""
+
+import os
+import sys
+import re
+
+if len(sys.argv) < 2:
+  print("Usage: mass-rename <directory>")
+  sys.exit()
+  
+path = sys.argv[1]
+
+def query_yes_no(question, default="yes"):
+  valid = {"yes":True, "y":True, "ye":True, "no":False, "n":False}
+  if default == None:
+    prompt = " [y/n] "
+  elif default == "yes":
+    prompt = " [Y/n] "
+  elif default == "no":
+    prompt = " [y/N] "
+  else:
+    raise ValueError("invalid default answer: '%s'" % default)
+
+  while True:
+    sys.stdout.write(question + prompt)
+    choice = raw_input().lower()
+    if default is not None and choice == '':
+      return valid[default]
+    elif choice in valid:
+      return valid[choice]
+    else:
+      sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
+
+      
+def myrename(root, file):
+  # FIXME: what happens if we have a name clash?
+  file2 = file
+  file2 = file2.lower()
+  file2 = file2.replace("\xc3\xA4", "ae")
+  file2 = file2.replace("\xc3\xB6", "oe")
+  file2 = file2.replace("\xc3\xBC", "ue")
+  file2 = file2.replace("\xc3\x84", "Ae")
+  file2 = file2.replace("\xc3\x96", "Oe")
+  file2 = file2.replace("\xc3\x9C", "Ue")
+  file2 = file2.replace("\xc3\x9f", "ss")
+  file2 = file2.replace(" ", "_")
+  file2 = file2.replace("-", "_")
+  file2 = file2.replace("\n", "_")
+  # FIXME: really remove them or convert to _?
+  illegal = ["!", '"', "§", "$", "%", "&", "(", ")", "=", "?", "'", "”", "“"]
+  for s in illegal:
+    file2 = file2.replace(s, '')
+  file2 = re.sub(r'_+', '_', file2)  
+  file2 = file2.replace("_.", ".")
+  if file != file2:
+    os.rename(os.path.join(root, file), os.path.join(root, file2))
+
+ok = query_yes_no("Really rename all files below that dir?")
+if not ok:
+  sys.exit()
+    
+for root, dirs, files in os.walk(path, topdown=False):
+  map(lambda x: myrename(root, x), files)
+  map(lambda x: myrename(root, x), dirs)

@@ -1,0 +1,82 @@
+#! /usr/bin/python
+
+import os
+import sys
+import subprocess
+import argparse
+
+# FIXME document 
+parser = argparse.ArgumentParser(description="Display status of git/svn repos in current directory.")
+parser.add_argument("--include", default="all", 
+  help="Only show files with the spVerbose output")
+parser.add_argument("--exclude", default="binary", 
+  help="Only show files with the spVerbose output")
+parser.add_argument("--prefixpath", action="store_true", help="Verbose output")
+args = parser.parse_args()
+
+include = args.include
+
+if include == "none":
+  include = []
+elif include != "all":
+  include = include.strip().split(",")
+
+exclude = args.exclude
+if exclude == "none":
+  exclude = []
+else:
+  exclude = exclude.strip().split(",")
+
+path = "."
+show_svn_eol = True
+
+# FIXME better also inlcude / exclude based on mime type
+# also enable pattern matching for file names
+
+print "%-50s %-10s %-4s %10s" % ("FILE", "CHARSET", "EOL",  "SVN-EOL")
+for root, dirs, files in os.walk(path):
+  files = [f for f in files if not f[0] == '.']
+  dirs[:] = [d for d in dirs if not d[0] == '.']
+  first = True
+
+  for f in files:
+    f_full = os.path.abspath(os.path.join(root, f)) 
+
+    cmd = subprocess.Popen(["file", "-b", "-i", f_full], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout1, stderr1 = cmd.communicate()
+    if "text/" in stdout1:
+      charset = stdout1.strip().split("charset=")[1].strip()
+    else:
+      charset = ""
+    
+    # FIXME can we do this wirth one "file" command?
+    cmd = subprocess.Popen(["file", "-b", f_full], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout2, stderr2 = cmd.communicate()
+    eol_type = ""
+    if ", with CRLF line terminators" in stdout2:
+      eol_type = "win"
+    elif ", with CR line terminators" in stdout2:
+      eol_type = "mac"
+    elif "text/" in stdout1:
+      eol_type = "unix"
+
+    if show_svn_eol:
+      cmd = subprocess.Popen(["svn", "propget", "svn:eol-style", f_full], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      stdout3, stderr3 = cmd.communicate()
+      svn_eol_style = stdout3.strip()
+
+    if (include == "all" or charset in include) and not charset in exclude:
+      if not args.prefixpath and first:
+        print "##### %s" % root
+      f_display = os.path.join(root, f) if args.prefixpath else f
+      print "%-50s %-10s %-4s %10s" % (f_display, charset, eol_type, svn_eol_style)
+      first = False 
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,59 @@
+#!/usr/bin/env Rscript
+
+# show how many jobs a user has placed in a queue
+# actually it might be better to show how many cpus were allocated...!
+
+library(BBmisc)
+library(stringr)
+library(setwidth)
+library(plyr)
+
+# fuckit = .C("setwidth_Start", 0L, PACKAGE = "setwidth")
+
+queues1 = c(
+  "short_eth",
+  "med_eth",
+  "long_eth", 
+  "ultralong_eth", 
+  "short_quad", 
+  "med_quad", 
+  "long_quad"
+)
+
+queues2 = sapply(queues1, str_sub, end=8)
+
+s = system3("qstat", stdout=TRUE, args=c("-a", queues1))$output
+tab = read.table(textConnection(s[-(1:5)]), header=FALSE)
+tab = setColNames(tab[, c(2,3,7)], c("user", "queue", "cpus"))
+#FIXME is this correct?
+tab$cpus = as.integer(str_replace_all(as.character(tab$cpus), "--", 1))
+tab2 = table(tab$user, tab$queue)
+queues3 = intersect(queues2, colnames(tab2))
+tab2 = tab2[, queues3]
+
+tab3 = tab2
+for (u in rownames(tab2)) {
+  for (q in colnames(tab2)) {
+    tab3[u, q] = sum(subset(tab, user==u & queue==q)$cpus)
+  }
+}
+tab3 = cbind(tab2, tab3)
+tab3 = tab3[, rep(seq_col(tab2), each=2) + c(0, ncol(tab2))]
+tab3 = as.data.frame(tab3)
+
+users = rownames(tab3)
+fingerout= sapply(users, function(x) system3("finger", args=x, stdout=TRUE)$output)
+realnames = sapply(fingerout, function(x) x[1])
+realnames = str_split(realnames, pattern=" +")
+realnames = sapply(realnames, function(x) collapse(x[4:length(x)], " "))
+offices = sapply(fingerout, function(x) x[3])
+offices = str_split(offices, pattern=" +")
+offices = sapply(offices, function(x) x[2])
+tab3 = cbind(user=users, realname=realnames, office=offices, tab3)
+rownames(tab3) = NULL
+print(tab3)
+
+
+
+
+

@@ -1,0 +1,7 @@
+#! /usr/bin/python
+
+import os
+
+pkg = os.path.basename(os.path.normpath(os.getcwd()))
+os.system('scp html/* "shell:/home/bischl/public_html/rdocs/%s/html/"' % (pkg))
+

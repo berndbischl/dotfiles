@@ -1,0 +1,15 @@
+git clone https://github.com/vim/vim
+cd vim
+./configure --with-features=huge \
+            --enable-rubyinterp \
+            --enable-pythoninterp \
+            --enable-perlinterp \
+            --enable-luainterp \
+            --with-x \
+            --enable-cscope \
+            --prefix=/home/bischl/local_software
+
+make
+make install
+
+

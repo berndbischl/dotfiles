@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import subprocess
+import argparse
+
+parser = argparse.ArgumentParser(description="Display status of git/svn repos in current directory.")
+parser.add_argument("--verbose", action="store_true", help="Verbose output")
+
+args = parser.parse_args()
+
+top_dir  = "." 
+
+# FIXME only dirs
+dirs = os.listdir(".")  
+
+
+def print_status(out, is_svn, is_git):
+  out = out.strip()
+  lines = out.split('\n')
+  if out == "":
+    k = 0
+  else:
+    k = len(lines)
+  if (is_git or is_svn) and k > 0:
+    print "%-30s: %3i potential changes" % (dir, k)
+    if args.verbose:
+      print out
+  return
+
+def print_push(out):
+  out = out.strip()
+  lines = out.split('\n')
+  if push_out == "":
+    k = 0
+  else:
+    k = len(push_out)
+  if (is_git or is_svn) and k > 0:
+    print "%-30s:   Push missing" % (dir)
+  return   
+
+for dir in dirs:
+  if os.path.isdir(dir): 
+    dir_svn = dir + "/.svn"
+    dir_git = dir + "/.git"
+    is_svn = os.path.exists(dir_svn)
+    is_git = os.path.exists(dir_git)
+    if is_svn or is_git:
+      os.chdir(dir)
+    status_out = ""
+    if is_svn:
+      cmd = subprocess.Popen(["svn", "status"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      stdout, stderr = cmd.communicate()
+      status_out = stdout
+    if is_git:
+      cmd = subprocess.Popen(["git", "status", "--porcelain"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      stdout, stderr = cmd.communicate()
+      status_out = stdout
+      cmd = subprocess.Popen(["git", "rev-list", "origin..HEAD"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+      stdout, stderr = cmd.communicate()
+      push_out = stdout
+      print_push(push_out)
+      
+    print_status(status_out, is_svn, is_git)  
+    if is_svn or is_git:
+      os.chdir("..")

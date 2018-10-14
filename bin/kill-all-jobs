@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+import subprocess
+import getpass
+
+user_name = getpass.getuser()
+jobs = subprocess.Popen(["qselect", "-u "+user_name], stdout=subprocess.PIPE)
+jobs = jobs.stdout.readlines()
+
+jobs = map(lambda x: x.strip(), jobs)
+
+if (len(jobs) == 0):
+  print "No jobs on cluster!"
+else:
+  ok = raw_input("Really kill {0:d} jobs (y/n) ? ".format(len(jobs)))
+  if (ok == "y"):
+    print "Killing..."
+    jobs.insert(0, "qdel")
+    subprocess.call(jobs)
+  else:
+    print "Aborted."

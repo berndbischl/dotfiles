@@ -1,0 +1,42 @@
+#! /usr/bin/python
+
+import os
+import sys
+import subprocess
+import argparse
+
+# FIXME document 
+parser = argparse.ArgumentParser(description="Display status of git/svn repos in current directory.")
+args = parser.parse_args()
+
+
+path = "."
+
+for root, dirs, files in os.walk(path):
+  files = [f for f in files if not f[0] == '.']
+  dirs[:] = [d for d in dirs if not d[0] == '.']
+  first = True
+
+  for f in files:
+    f_full = os.path.abspath(os.path.join(root, f)) 
+    print f_full
+
+    cmd = subprocess.Popen(["file", "-b", "-i", f_full], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout1, stderr1 = cmd.communicate()
+    if "text/" in stdout1:
+      charset = stdout1.strip().split("charset=")[1].strip()
+    else:
+      charset = ""
+    print charset
+    if charset != "utf-8":
+      subprocess.call(["iconv", "-f", charset, "-t UTF-8", "-o", f_full, f_full])
+      
+
+
+
+
+
+
+
+
+

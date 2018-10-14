@@ -1,0 +1,24 @@
+#! /usr/bin/python
+
+import os
+import sys
+
+path = sys.argv[1]
+
+def myrename(root, file):
+  file2 = file
+  file2 = file2.replace("\xc3\xA4", "ae")
+  file2 = file2.replace("\xc3\xB6", "oe")
+  file2 = file2.replace("\xc3\xBC", "ue")
+  file2 = file2.replace("\xc3\x84", "Ae")
+  file2 = file2.replace("\xc3\x96", "Oe")
+  file2 = file2.replace("\xc3\x9C", "Ue")
+  file2 = file2.replace("\xc3\x9f", "ss")
+  if file != file2:
+    os.rename(os.path.join(root, file), os.path.join(root, file2))
+  
+for root, dirs, files in os.walk(path, topdown=False):
+  map(lambda x: myrename(root, x), files)
+  map(lambda x: myrename(root, x), dirs)
+
+myrename(".", path)  

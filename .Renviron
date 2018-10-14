@@ -1,3 +1,4 @@
 LANGUAGE=en
 R_MAX_NUM_DLLS=614
+R_LIBS_USER=~/.R/library
 

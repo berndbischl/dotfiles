@@ -94,9 +94,12 @@ setxkbmap -option caps:escape
 
 . /usr/share/autojump/autojump.sh
 source ~/.fzf.bash
+    
+# add rt to path
+PATH="/home/bischl/.R/library/rt/bin:$PATH"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/R/x86_64-pc-linux-gnu-library/3.4/rt/bin:$HOME/.local/bin:$HOME/bin:$PATH"
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 

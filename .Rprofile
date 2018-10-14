@@ -3,23 +3,20 @@ Sys.setenv(R_EXPENSIVE_EXAMPLE_OK = "TRUE")
 Sys.setenv(R_EXPENSIVE_TEST_OK = "TRUE")
 
 options(
-  repos = c(CRAN = "https://ftp.gwdg.de/pub/misc/cran/"), 
-  BioC_mirror = "http://bioconductor.statistik.tu-dortmund.de",
+  menu.graphics=FALSE, #no popups
+  useFancyQuotes = FALSE, #no directional quotes
+  max.print = 10000, #stop R from crashing because it prints to much sh**t
+  digits = 4, #don't print a million digits
+  scipen=2, #use scientific notation for values >10^7
+  help_type="html", #html help is nicer than the terminal one
+  show.signif.stars=FALSE, # evil evil stars
+  deparse.max.lines = 3L, # reduce output of traceback
+  Ncpus = parallel::detectCores(),
+  mc.cores = parallel::detectCores(),
+  devtools.revdep.libpath = "~/revdep_libs",
   browserNLdisabled = TRUE, # better whitespace handling in browser
-  deparse.max.lines = 3L, # traceback looks better
-  devtools.revdep.libpath = "~/revdep_libs"
+  java.parameters="-Xrs" # so rJava does not kill session on CTRL-C
 )
-
-# create user lib if it does not exist
-userlib = Sys.getenv("R_LIBS_USER")
-if (userlib != "") {
-  if (!file.exists(userlib)) {
-    message("Creating empty user lib directory ", userlib)
-    dir.create(userlib, recursive = TRUE, mode = "755")
-  }
-} else {
-  message("No user lib")
-}
 
 #options(error = function() traceback(2))
 ### set locales
@@ -38,34 +35,10 @@ if (interactive()) {
   suppressPackageStartupMessages(library(devtools))
   library(roxygen2)
   library(testthat)
-  library(stringr)
-  # do not use colorout, seems to cause problems with testthat
-  options(menu.graphics = FALSE)
   loadhistory("~/.Rhistory")
   Sys.setenv(R_HISTSIZE=5000)
-  options(digits=4)
-  # so rJava does not kill session on CTRL-C
-  options(java.parameters="-Xrs")
-  # dont use this so we have help pages in vim, well maybe html better
-  if (Sys.info()["nodename"] %in% c("x1-lmu", "bischl-x1", "Bischl", "lsweihs-thinkpad", "lwap04", "office-2014", "bischl-NBMSIND", "bischl-x1-5thgen"))
-    options(help_type="html")
-  ip2 = function(x) {
-    install.packages(x)
-    lapply(x, require, character.only=TRUE)
-    update.packages(instlib=.libPaths()[1])
-  }
-  messagef("Work dir: %s", getwd())
 
-  testme = function(filter) {
-    load_all(".")
-    test_dir("tests/testthat/", filter = filter) 
-  }
-  
-  helpme = function(name) {
-    roxygenize(".")
-    load_all(".") 
-    dev_help(name) 
-  }
+  messagef("Work dir: %s", getwd())
 }
 
 

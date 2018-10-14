@@ -1,0 +1,5 @@
+#!/bin/bash
+~/.R/library/rt/bin/rupdate
+sudo apt update
+sudo apt -y upgrade
+snap refresh

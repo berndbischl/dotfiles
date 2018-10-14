@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -n "reconnect" | tee /sys/bus/serio/devices/serio1/drvctl

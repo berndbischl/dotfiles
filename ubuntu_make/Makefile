@@ -53,6 +53,7 @@ preparations:
 	make update
 	sudo apt -y install software-properties-common build-essential checkinstall wget curl git libssl-dev apt-transport-https ca-certificates libcurl4-openssl-dev libxml2-dev libcairo2-dev libgmp3-dev libproj-dev libcgal-dev libglu1-mesa-dev libx11-dev libgsl-dev libcr-dev mpich mpich-doc libmagick++-dev vpnc 
 
+# apparently needed for bash-it
 fonts:
 	mkdir -p ~/.fonts
 	rm -f ~/.fonts/*
@@ -162,6 +163,7 @@ fzf:
 	~/.fzf/install --all --key-bindings --completion --update-rc --64
 
 
+# what is this? remove?
 bat:
 	wget https://github.com/sharkdp/bat/releases/download/v0.6.0/bat_0.6.0_amd64.deb
 	sudo dpkg -i bat_0.6.0_amd64.deb

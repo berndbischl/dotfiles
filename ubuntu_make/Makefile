@@ -155,6 +155,13 @@ links:
 	ln -fs ~/cos/dotfiles/bin ~/bin
 	ln -fs ~/cos/dotfiles/.rt/packages ~/.rt/packages
 
+
+fzf:
+	rm -rf ~/.fzf 
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install --all --key-bindings --completion --update-rc --64
+
+
 bat:
 	wget https://github.com/sharkdp/bat/releases/download/v0.6.0/bat_0.6.0_amd64.deb
 	sudo dpkg -i bat_0.6.0_amd64.deb

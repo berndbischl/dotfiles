@@ -62,8 +62,8 @@ set timeoutlen=1000 ttimeoutlen=0           " avoid annoying delay when pressing
 set nofoldenable                            " disable folding
 set printoptions=paper:A4,number:y
 " backup files
-set backupdir=~/.vim/backup/                " swap files in one dir
-set directory=~/.vim/backup/
+set backupdir=/tmp                          " swap files in one dir
+set directory=/tmp
 set nobackup
 set noswapfile
 " Visual

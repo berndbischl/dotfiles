@@ -7,8 +7,8 @@
 
 # clone repo to cos-dir, if it doesn't exist, we do not want to overwrite 
 gitclone2cos =                                                 \
-	if [ ! -d "~/cos/$(2)" ]; then \
-	  git clone "git@github.com:$(1)/$(2)" "~/cos/$(2)"; \
+	if [ ! -d "/home/bischl/cos/$(2)" ]; then \
+	  git clone "git@github.com:$(1)/$(2)" "/home/bischl/cos/$(2)"; \
 	fi
 
 .PHONY:	update upgrade preparations graphics fonts google_chrome python slack telegram media latex teamviewer sublime java tools enpass rstudio bash-it ssh-key docker

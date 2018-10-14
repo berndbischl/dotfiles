@@ -1,0 +1,175 @@
+# F-Keys
+F1  : toggle nerdtree
+F2  : CtrlP
+F3  :
+F4  :
+
+F5  : git status
+F6  : R console
+F7  : LatexBox latexmk compile
+
+F9  : spell checking
+F10 : clear search highlighting
+F11 : invisible symbols
+F12 : toggle wrap mode
+
+# General
+reload vim rc             :so ~/.vimrc
+open empty tab            :tabedit
+open in tab               :tabedit file
+save file                 : Ctrl-s
+w <name>                  : write to file
+
+
+# Editing
+redo action               : Go to insert, type it in, ESC. Then hit . at similar place in code.
+move 1 word forward       : w
+move to 1st line          : gg
+move to last line         : G
+move to line 42           : 42gg
+change word (start)       : cw
+change word (anywhere)    : ciw
+Replace line with yanked  : Vp
+delete till end           : dG
+block comment : use vimcommentary, then gc and bla
+move wrt sentences        : ( and )
+move wrt bloc             : { and }
+yank line                 : yy
+yank 3 lines              : 3yy
+yank word                 : yw
+delete line               : dd
+delete 3 lines            : 3dd
+delete word               : dw
+cut line                  : mm
+cut word                  : mw
+delete all in block       : di}
+delete all in quotes         : di" / di'
+change/delete to [char]   : dt[char], z.b.
+Recording longer sequences:
+hit <q a>, that starts recording into register a, then do sequence and end with q.
+<@q a> now plays that sequence back.
+visual mode               : v for char, V for line, CTRL-V for block
+
+# Nerdtree
+open file in new tab      : t
+nerdtree menu             : m
+(newfile, delete, mv)     :
+refresh                   : R for root, r for dir
+
+# Windows
+cycle focus thru windows  : CTRL-w w
+Resize windows            : use mouse
+
+# Indentation
+== line
+= selection
+=G                        : auto-indent on file
+=i}                       : auto indent on current block
+Indent (whole buffer)                             gg=G
+
+# LatexBox
+Open viewer               :LatexView
+Compile                   : F8
+Set master doc            : should work out-of-the-box by asking
+
+# Search and Replace
+Search for some stuff       :/stuff, then use n and p to cycle thru
+Search and replace in file  :%s/old/new/c, c is for confirm
+:tabdo %s/pattern/replace/c
+Search with ack             :Ack <term>, then hit return in list to open in tab
+
+# tmux
+create another window: alt c
+next window : alt left/right
+switch pane : alt up/down
+split hori. : alt-h
+split vert. : alt-v
+kill pane : alt-x
+kill-session : alt-q
+shift in tmux für mouse copy
+
+# vim-commentary
+Comment toggle: CTRL-y, also works in visual
+
+# R
+F6 rf um R zu starten, wenn man in tmux ist und eine R Datei ansieht
+ALT-UP/DOWN um panes zu wecheln
+SPACE um zeile oder selection zu senden
+Nette Hotkeys, alle mit Lokal Leader
+  h : shows help for function
+  a : shows argument list / signature of function
+  p : print object
+  s : call str on object
+  u: update object list, to refresh smybols of loaded packages
+  f : send function
+  :Rhelp foo : for help in split screen
+
+set pastetoggle=<f10>
+
+neocomplete nur bei tastendruck?
+
+lesen nochmal
+http://nvie.com/posts/how-i-boosted-my-vim/
+
+cltr-s crashes tvim?
+
+snipmate ansehen, vimr plugin hat files
+
+http://stackoverflow.com/questions/1557893/making-inserting-a-single-character-in-vim-an-atomic-operation
+
+##### R:
+wie bekommt man funktion completion?
+R: master doc setzen  können und das per hotkey ausgführen
+
+##### Git:
+
+richtig gut mit fugitive werden
+
+git status:
+  <C-N> next file
+                        -     |:Git| add
+                        -     |:Git| reset (staged files)
+                        cc    |:Gcommit|
+                        D     |:Gdiff|
+                        ds    |:Gsdiff|
+                        dv    |:Gvdiff|
+                        O     |:Gtabedit|
+                        R     reload status
+
+
+michels git mit gstatus
+
+wie geht history mit fugitive
+wie gstatus in new tab
+vim mit fugitive gstatus in extra tmux?
+nö oder?
+
+##### Read write:
+
+- wie geht autoread on external change?
+http://vim.wikia.com/wiki/Have_Vim_check_automatically_if_the_file_has_changed_externally
+
+- ctrlp findet neu-angelegte files nicht
+
+##### Copy paste crap:
+
+beim pasten von r code wird die formatierung geändert. set paste hilft nicht
+bsp wenn args in mehreren zeilen sind bei einem call.
+es geht, wenn man mit mittlerem mouse button pastet?
+
+Y shortcut von michel
+
+##### Dinge für später:
+
+- tabularize mal ansehen
+
+- https://github.com/chrisbra/csv.vim
+
+- vim.surrounding ansehen
+
+- Omnicomplete-Power
+Vim bietet seit Version 7 mit Omnicomplete ein unschlagbares Werkzeug. Omnicomplete ergänzt einfach so gut wie alles: ob einfache Worte, Einträge aus Wörterbüchern, Funktionen, Klassen, Dateinamen. Das ist genial. Ich habe kurzerhand einfach ein 7 MB großes Dictionary mit der deutschen Rechtschreibung angebunden, und jetzt ergänzt mir Vim jedes noch so komplizierte Wort.
+
+- http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+The first two lines fix Vim’s horribly broken default regex “handling” by automatically inserting a \v before any string you search for. This turns off Vim’s crazy default regex characters and makes searches use normal regexes. I already know Perl/Python compatible regex formatting, why would I want to learn another scheme?
+

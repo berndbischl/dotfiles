@@ -1,0 +1,15 @@
+--type-set=rscript=.R,.r
+--ignore-dir=aclibr.Rcheck
+--ignore-dir=algselbench.Rcheck
+--ignore-dir=BatchExperiments.Rcheck
+--ignore-dir=BatchJobs.Rcheck
+--ignore-dir=BBmisc.Rcheck
+--ignore-dir=checkmate.Rcheck
+--ignore-dir=mlr.Rcheck
+--ignore-dir=mlrMBO.Rcheck
+--ignore-dir=parallelMap.Rcheck
+--ignore-dir=ParamHelpers.Rcheck
+
+
+
+

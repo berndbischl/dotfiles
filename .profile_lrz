@@ -1,0 +1,7 @@
+# module add git
+# module add R/3.2mkl
+    
+TERM="xterm-256color"
+export GIT_PAGER='less -iRS'
+IGNOREEOF=5
+    

@@ -1,0 +1,91 @@
+Host shell
+    HostName shell.statistik.tu-dortmund.de
+    User bischl
+Host compute1
+    HostName compute1
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host compute2
+    HostName compute2
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host lido
+    HostName lidong2.itmc.tu-dortmund.de
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host rao
+    HostName rao
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host tukey
+    HostName tukey
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host neyman
+    HostName neyman
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host pearson
+    HostName pearson
+    User bischl
+    ProxyCommand ssh shell -W %h:22
+Host kendall
+    HostName kendall
+    User bischl
+    ProxyCommand ssh shell nc %h %p
+Host adelaide
+    HostName staff.cs.adelaide.edu.au
+    User a1617128
+Host corvus
+    Hostname corvus.ersa.edu.au
+    User htrautmann
+Host dkfz
+    Hostname hpc35.inet.dkfz-heidelberg.de
+    Port 22000
+    User bischl
+Host ls11
+    Hostname calcit.cs.tu-dortmund.de
+    User bischl
+Host bitbucket.org
+    IdentityFile ~/.ssh/id_rsa
+Host bischl
+    HostName bischl
+    User bischl
+    ProxyCommand ssh shell nc -w 1 %h %p
+    ForwardX11Trusted yes
+    Compression yes
+Host uberspace
+    HostName menkar.uberspace.de
+    User bischl
+Host lrz-hpc
+    Hostname lxlogin5.lrz.de
+    User di68kay2
+Host cip1
+    Hostname cipserv1.stat.uni-muenchen.de 
+    User bischl
+Host cip3
+    Hostname cipserv3.stat.uni-muenchen.de 
+    User bischl
+Host penelope
+    Hostname penelope.stat.uni-muenchen.de 
+    User bischl
+Host bounty
+    Hostname bounty.stat.uni-muenchen.de 
+    User bischl
+    ProxyCommand ssh penelope -W %h:22
+Host snickers
+    Hostname snickers.stat.uni-muenchen.de 
+    User bischl
+    ProxyCommand ssh penelope -W %h:22
+Host azure
+    Hostname coseal.cloudapp.net
+    User bischl
+Host azure1
+    Hostname coseal1.cloudapp.net
+    User bischl
+Host euler
+    Hostname euler.cemeai.icmc.usp.br
+    User rafael
+
+ServerAliveInterval 5
+ServerAliveCountMax 10

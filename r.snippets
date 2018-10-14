@@ -1,0 +1,51 @@
+
+# conditionals
+snippet if
+	if (${1:condition}) {
+		${0}
+	}
+snippet el
+	else {
+		${0}
+	}
+snippet ei
+	else if (${1:condition}) {
+		${0}
+	}
+
+snippet ifel
+	if (${1:condition}) {
+		${2:body1}
+	} else {
+		${3:body2}
+	}
+# functions
+snippet fun
+	${1:name} = function (${2:variables}) {
+		${0}
+	}
+
+# roxygen
+snippet rp
+	@param ${1:name} [\code{${2:type}}]\cr
+		${0}.
+
+snippet rpi
+	@param ${2:name} [\code{integer(1)}]\cr
+		${0}.
+
+snippet rpn
+	@param ${2:name} [\code{numeric(1)}]\cr
+		${0}.
+
+snippet rpc
+	@param ${2:name} [\code{character(1)}]\cr
+		${0}.
+
+snippet rl
+	\link{${0}}
+
+snippet rcl
+	\code{\link{${0}}}
+
+

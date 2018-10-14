@@ -1,0 +1,49 @@
+# set vim as default editor
+export EDITOR=/usr/bin/vim
+
+# set better options for "less", needed for "git diff"
+export LESS=eFRX
+
+# source alias file
+test -s ~/.bash_aliases && . ~/.bash_aliases || true
+
+# load our default mopdules
+module load R/3.3mkl
+module load git
+
+
+# add stuff to path
+export PATH=$PATH:/home/hpc/pr74ze/ri89coc2/lrz_configs/bin
+export PATH=$PATH:~/R/x86_64-pc-linux-gnu-library/3.3/rt/bin
+export PATH=$PATH:~/cos/linux-stuff/bin
+
+# brew 
+export PATH=~/.linuxbrew/bin:~/.linuxbrew/sbin:$PATH
+export MANPATH=$MANPATH:~/.linuxbrew/share/man
+export INFOPATH=$INFOPATH:~/.linuxbrew/share/info
+export XDG_DATA_DIRS=~/.linuxbrew/share:$XDG_DATA_DIRS
+
+# disable freezing after ctrl-s
+stty -ixon
+
+# we need this for rJava, although we should not?
+# export LD_LIBRARY_PATH=/usr/lib64:/lrz/mnt/sys.x86_64/compilers/java/jdk1.7.0_51/jre/lib/amd64/server:$LD_LIBRARY_PATH
+# export LD_LIBRARY_PATH=$JAVA_LD_LIBRARY_PATH 
+
+# set our default cluster, 
+# we might have to touch this to make batchtools work
+export CLUSTERS=serial
+
+# do we still need this?
+module load gcc # apparently R/3.3mkl unloads gcc :( so we load gcc module last
+
+export LDFLAGS="-L/home/hpc/pr74ze/di68kay2/.linuxbrew/Cellar/libxml2/2.9.7/lib"
+export CPPFLAGS="-I/home/hpc/pr74ze/di68kay2/.linuxbrew/Cellar/libxml2/2.9.7/include"
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/hpc/pr74ze/di68kay2/.linuxbrew/Cellar/libxml2/2.9.7/lib
+
+
+
+
+
+
+

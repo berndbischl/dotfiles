@@ -1,0 +1,282 @@
+set nocompatible               " be iMproved, for vundle
+filetype off                   " for vundle  
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+let g:vundle_default_git_proto = 'git'
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'gmarik/vundle'                               " vundle installer
+Plugin 'scrooloose/nerdtree'                         " nerdtree file browser
+
+" the fakeclip plugin seems to break easycllip, if i eg do yy, 
+" it prints "register is plus" then " waits for enter... :(
+" Plugin 'cazador481/fakeclip.neovim'                  " fake clipboard without x windows
+
+Plugin 'jistr/vim-nerdtree-tabs'                     " nerdtree opens in tabs
+Plugin 'tpope/vim-fugitive'                          " best vim git plugin
+Plugin 'airblade/vim-gitgutter'                      " git vertical status bar
+Plugin 'bling/vim-airline'                           " airline horizontal status bar
+Plugin 'kien/ctrlp.vim'                              " open files with fuzzy search
+Plugin 'jalvesaq/Nvim-R' 
+Plugin 'mllg/vim-devtools-plugin'                    " Michel's devtools plugin  
+Plugin 'tpope/vim-markdown'                          " ??? 
+Plugin 'tpope/vim-repeat'                            " dependecy for easyclip
+Plugin 'tpope/vim-commentary'                        " allow comment with hotkey
+Plugin 'vim-scripts/UnconditionalPaste'              " paste troubles?
+Plugin 'LaTeX-Box-Team/LaTeX-Box'                    " ???
+Plugin 'mileszs/ack.vim'                             " ack search tool   
+Plugin 'ervandew/supertab'                           " supertab autocompletion   
+Plugin 'scrooloose/syntastic'                        " ??? 
+" Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'svermeulen/vim-easyclip'                     " better copy-paste with dd, ss, and mm, etc
+Plugin 'vim-scripts/SearchComplete'                  " ??? 
+Plugin 'altercation/vim-colors-solarized.git'        " solarized color scheme   
+Plugin 'editorconfig/editorconfig-vim'               " editorconfig     
+Plugin 'brooth/far.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" General
+set mouse=a                                 " enable mouse
+set clipboard=unnamedplus                   " use system clipboard
+set encoding=utf-8                          " use utf8
+set fileformats+=mac                        " support mac EOLs
+set backspace=indent,eol,start              " allow backspacing over everything in insert mode.
+set autowriteall                            " save file on buffer change
+set autoread
+set history=2000                            " longer command history
+set spelllang=en_us                         " spellchecking, US english
+set showmatch                               " set show matching parenthesis
+let mapleader=","                           " define leader
+let maplocalleader="ß"                      " define local leader
+set timeoutlen=1000 ttimeoutlen=0           " avoid annoying delay when pressing ESC -> normal
+set nofoldenable                            " disable folding
+set printoptions=paper:A4,number:y
+" backup files
+set backupdir=~/.vim/backup/                " swap files in one dir
+set directory=~/.vim/backup/
+set nobackup
+set noswapfile
+" Visual
+set number                                  " line numbers
+syntax on                                   " syntax highlighting
+set laststatus=2                            " always show status bar
+set cursorline                              " show current edit line
+" Indentation + whitespace
+set expandtab 		                    " use spaces instead of tabs
+set shiftwidth=2                            " spaces used for autoindent and commands like >>.
+set softtabstop=2                           " spaces inserted by <Tab>.
+set shiftround                              " use multiple of shiftwidth when indenting with '<' and '>'
+set autoindent                              " copies indentation of last line, no problem with plugin indent
+filetype plugin indent on 	            " detect indentation type by filetype
+" autocmd BufWritePre *.[Rrc] :%s/\s\+$//ei " this removes trailing ws. bad for Rmd and md.
+                                            " also not perfect for diffs 
+                                            " also editorconfig is better for this i guess
+"Wrapping and long lines
+set wrap
+set textwidth=100
+set formatoptions=qrn1
+set colorcolumn=105
+" Searching.
+set gdefault                                " global substitutions on lines by default (/g turns it off).
+set hlsearch                                " highlight results.
+set incsearch                               " search-as-you-type.
+set ignorecase smartcase                    " case-insensitive unless we include uppercase.
+set wildignore+=*.Rcheck                    " Do not search .Rcheck
+" Unknown
+set wildmenu
+set wildmode=list:longest,full
+set nojoinspaces                            " 1 space, not 2, when joining sentences.
+" Colors
+set t_Co=256
+set background=dark
+" colorscheme solarized
+" Invisible symbols
+set listchars=tab:▸\ ,eol:¬                 " Symbols for tabstops and EOLs
+" Invisible character colors
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
+" completion
+"set omnifunc=syntaxcomplete#Complete
+" set completeopt=longest,menuone
+" ctags
+set tags=~/cos/linux-stuff/tags
+
+
+" FZF fuzzy finder
+set rtp+=~/.fzf
+
+" nerdtree settings
+let g:NERDTreeMouseMode = 2
+let g:NERDTreeWinSize = 40
+let NERDTreeShowHidden = 1          " show hidden files
+let NERDTreeIgnore = ['\.git$']     " dont show swp files in tree
+let NERDTreeQuitOnOpen = 0          "dont close after open
+
+
+" CtrlP
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/](\.git|\.hg|\.svn|pkg)$',
+      \ 'file': '\v\.(exe|so|dllpyc|swp)$'
+      \ }
+let g:ctrlp_mruf_last_entered = 1
+let g:ctrlp_mruf_relative = 1
+" always open ctrp file in new tab
+let g:ctrlp_prompt_mappings = {
+      \ 'AcceptSelection("e")': ['<c-t>'],
+      \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
+      \ }
+let g:ctrlp_tabpage_position = 'al' " always open after last tab
+
+" super tab
+" let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
+
+" R Plugin
+let R_in_buffer = 0                   " for tmux
+let R_applescript = 0                 " for tmux  
+let R_tmux_split = 1                  " for tmux
+let R_assign = 0                      " dont convert underscore in <-
+" let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,BBmisc,checkmate"
+" let vimrplugin_notmuxconf = 1               " do not let plugin configure tmux
+let r_indent_align_args = 0                 " dont align function args when they span multiple lines
+" let g:vimrplugin_insert_mode_cmds = 0       " dont allow R commands in insert mode
+" let g:vimrplugin_vimpager = "vertical"      " where to show R help page in vim
+" let g:vimrplugin_restart = 1                " allow R restart oon hotkey
+" R Hotkeys
+vmap <LocalLeader><LocalLeader> <Plug>RDSendSelection
+nmap <LocalLeader><LocalLeader> <Plug>RDSendLine
+imap <C-w> <Plug>RCompleteArgs
+map <LocalLeader>h <LocalLeader>rh
+map <LocalLeader>a <LocalLeader>ra
+map <LocalLeader>p <LocalLeader>rp
+map <LocalLeader>u :RUpdateObjList<cr>
+map <LocalLeader>f <Plug>RDSendFunction
+map <LocalLeader>s <LocalLeader>rs
+
+" Scratch plugin, set scratch buffer to r file type
+let g:scratch_filetype='r'
+
+" Latexbox
+let g:LatexBox_quickfix=2
+let g:LatexBox_ignore_warnings = ['Underfull', 'Overfull', 'specifier changed to', 'Font shape', 'Some font shapes', 'Size substitutions']
+
+" easyclip use s for motion to replace, eg word with siw or line with ss
+let g:EasyClipUseSubstituteDefaults = 1
+
+" F-Keys
+" toggle nerdtree
+nnoremap <f1> :NERDTreeTabsToggle<cr>
+inoremap <f1> <nop>
+vnoremap <f1> <nop>
+" invoke ctrlp
+let g:ctrlp_map = '<f2>'
+inoremap <f2> <nop>
+vnoremap <f2> <nop>
+nnoremap <f3> <Esc>:Ack!
+inoremap <f3> <nop>
+vnoremap <f3> <nop>
+
+" show git status
+nnoremap <f5> :Gstatus<cr>
+inoremap <f5> <nop>
+vnoremap <f5> <nop>
+" start r console"
+nmap <f6> <Plug>RStart
+inoremap <f6> <nop>
+vnoremap <f6> <nop>
+" start latexmk
+nnoremap <f7> :Latexmk<cr>
+inoremap <f7> <nop>
+vnoremap <f7> <nop>
+
+" toggle spellchecking
+nnoremap <f9>  :setlocal spell!<cr>
+" clear search results
+nnoremap <f10> :noh<cr>
+" display invible symbols
+nnoremap <F11> :set list!<CR>
+" toggle wrapping mode
+nnoremap <F12> :set wrap!<CR>
+" nnoremap <F12> :RainbowParenthesesToggle<cr>
+
+
+
+" Arrow keys
+nmap <silent> <S-Left> :tabprev<CR>
+nmap <silent> <S-Right> :tabnext<CR>
+noremap <silent> <C-Left> :wincmd h<cr>
+noremap <silent> <C-Right> :wincmd l<cr>
+noremap <silent> <C-Up> :wincmd k<cr>
+noremap <silent> <C-Down> :wincmd j<cr>
+
+
+
+" Make Vim recognize XTerm escape sequences for Page and Arrow
+" keys combined with modifiers such as Shift, Control, and Alt.
+" See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
+if &term =~ '^screen'
+  " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
+  execute "set t_kP=\e[5;*~"
+  execute "set t_kN=\e[6;*~"
+
+  " Arrow keys http://unix.stackexchange.com/a/34723
+  execute "set <xUp>=\e[1;*A"
+  execute "set <xDown>=\e[1;*B"
+  execute "set <xRight>=\e[1;*C"
+  execute "set <xLeft>=\e[1;*D"
+endif
+map <Esc>[B <Down>
+
+" Other hotkeys
+" close buffer
+nnoremap <C-x> :q<cr>
+" Use CTRL-S for saving, also in insert mode, we always end in normal
+noremap <C-S> :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+inoremap <C-S> <C-C>:update<CR>
+" vim-commentary
+nmap <C-y> gccj
+vmap <C-y> gc
+" print
+nmap <silent> <localleader>p :hardcopy >~/.cache/vim/lastprint.ps<cr>:!xdg-open ~/.cache/vim/lastprint.ps &<cr>
+" enter works in normal mode
+nnoremap <cr> i<Enter><Esc>
+" ctrl-tab for omni completion
+inoremap <S-tab> <C-x><C-o>
+
+function! Preserve(command)
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  execute a:command
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+function! StripTrailingWhitespace()
+  call Preserve("%s/\\s\\+$//e")
+endfunction
+
+function! AddAssignSpaces()
+  call Preserve("%s,\\(\\S\\)=\\(\\S\\),\\1 = \\2,")
+endfunction
+
+function! ConvertAssignArrow()
+  call Preserve("%s,<-,=,")
+endfunction
+
+function FindNonAscii()
+  call Preserve("/[^\x00-\x7F]")
+endfunction
+
+

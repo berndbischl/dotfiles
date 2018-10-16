@@ -97,7 +97,7 @@ java:
 	sudo apt -y install default-jre default-jdk
 
 tools:
-	sudo apt -y install meld ack tmux autojump git
+	sudo apt -y install meld ack tmux autojump git gimp
 
 neovim:
 	# install new neovim from PPA

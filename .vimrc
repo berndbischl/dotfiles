@@ -1,185 +1,495 @@
-set nocompatible               " be iMproved, for vundle
-filetype off                   " for vundle  
+" ======================================================================================================================
+" Plugin Manager
+" ======================================================================================================================
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+let g:dein#install_log_filename = expand('~/.cache/dein-last.log')
+let g:dein#types#git#default_protocol = 'ssh'
+"let g:dein#types#git#clone_depth = 1
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+if dein#load_state(expand('~/.cache/dein'))
+    call dein#begin(expand('~/.cache/dein'))
+    call dein#add('Shougo/dein.vim')
 
-let g:vundle_default_git_proto = 'git'
+    " Essentials
+    call dein#add('tpope/vim-repeat') " Repeat more
+    call dein#add('tpope/vim-abolish') " Case insensitive replace, ... and other stuff
+    call dein#add('tpope/vim-eunuch') " Commands like :Remove
+    call dein#add('tpope/vim-sensible') " Better defaults
+    call dein#add('tpope/vim-endwise') " Some completions for viml/zsh/...
+    call dein#add('dietsche/vim-lastplace') " restore cursor position at start
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+    " Appearance
+    call dein#add('morhetz/gruvbox')
+    call dein#add('icymind/NeoSolarized')
+    call dein#add('chriskempson/vim-tomorrow-theme')
+    call dein#add('NLKNguyen/papercolor-theme')
+    call dein#add('vim-airline/vim-airline')
+    call dein#add('vim-airline/vim-airline-themes')
+    call dein#add('mhinz/vim-startify') " better start screen with bookmarks and mru
+    call dein#add('equalsraf/neovim-gui-shim') " for nvim-qt
+    " call dein#add('christoomey/vim-tmux-navigator')
+    call dein#add('kshenoy/vim-signature') " Show marks
 
-Plugin 'gmarik/vundle'                               " vundle installer
-Plugin 'scrooloose/nerdtree'                         " nerdtree file browser
+    " Completion
+    call dein#add('Shougo/deoplete.nvim') " Completion
+    call dein#add('Shougo/neco-vim') " vim completion
+    call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
+    call dein#add('ponko2/deoplete-fish')
+    call dein#add('ujihisa/neco-look')
+    " call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
 
-" the fakeclip plugin seems to break easycllip, if i eg do yy, 
-" it prints "register is plus" then " waits for enter... :(
-" Plugin 'cazador481/fakeclip.neovim'                  " fake clipboard without x windows
+    " Edit helpers
+    call dein#add('editorconfig/editorconfig-vim') " Support for editorconfig
+    call dein#add('matze/vim-move') " Move lines with <c-h> etc
+    call dein#add('itspriddle/vim-stripper', {'on_cmd' : 'Stripper'}) " Remove trailing whitespace
+    call dein#add('christoomey/vim-titlecase') " switch titlecase with gt+movement
+    call dein#add('tpope/vim-commentary') " Comment with gc
+    call dein#add('tpope/vim-surround') " Delete, add and change surroundings
+    call dein#add('wellle/targets.vim') " More text objects
+    call dein#add('michaeljsmith/vim-indent-object') " Indentation objects for targets
+    call dein#add('junegunn/vim-easy-align') " Align on operators
+    call dein#add('AndrewRadev/switch.vim') " Switch values like true/false with gs
+    call dein#add('machakann/vim-swap') " swap arguments with g< and g>
+    call dein#add('vim-scripts/ReplaceWithRegister') " replace motion with register using gr<motion>
+    call dein#add('Shougo/neosnippet.vim') " Snippet engine
+    call dein#add('Shougo/neosnippet-snippets', {'depends' : 'neosnippet.vim'}) " Snippets
+    call dein#add('mhinz/vim-sayonara', { 'on_cmd' : 'Sayonara' })
+    call dein#add('brooth/far.vim', {'on_cmd' : ['Far', 'FarDo', 'Farundo']}) " Find And Replace
+    " call dein#add('w0rp/ale') " Linting
 
-Plugin 'jistr/vim-nerdtree-tabs'                     " nerdtree opens in tabs
-Plugin 'tpope/vim-fugitive'                          " best vim git plugin
-Plugin 'airblade/vim-gitgutter'                      " git vertical status bar
-Plugin 'bling/vim-airline'                           " airline horizontal status bar
-Plugin 'kien/ctrlp.vim'                              " open files with fuzzy search
-Plugin 'jalvesaq/Nvim-R' 
-Plugin 'mllg/vim-devtools-plugin'                    " Michel's devtools plugin  
-Plugin 'tpope/vim-markdown'                          " ??? 
-Plugin 'tpope/vim-repeat'                            " dependecy for easyclip
-Plugin 'tpope/vim-commentary'                        " allow comment with hotkey
-Plugin 'vim-scripts/UnconditionalPaste'              " paste troubles?
-Plugin 'LaTeX-Box-Team/LaTeX-Box'                    " ???
-Plugin 'mileszs/ack.vim'                             " ack search tool   
-Plugin 'ervandew/supertab'                           " supertab autocompletion   
-Plugin 'scrooloose/syntastic'                        " ??? 
-" Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'svermeulen/vim-easyclip'                     " better copy-paste with dd, ss, and mm, etc
-Plugin 'vim-scripts/SearchComplete'                  " ??? 
-Plugin 'altercation/vim-colors-solarized.git'        " solarized color scheme   
-Plugin 'editorconfig/editorconfig-vim'               " editorconfig     
-Plugin 'brooth/far.vim'
+    " Git/version control support
+    call dein#add('tpope/vim-fugitive') " git support
+    call dein#add('tpope/vim-rhubarb')  " github support
+    call dein#add('mhinz/vim-signify') " Highlight changed lines
+    call dein#add('junegunn/gv.vim', {'on_cmd' : 'GV'}) " git browser
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+    " Denite
+    call dein#add('Shougo/denite.nvim')
+    call dein#add('Shougo/neomru.vim') " mru source for unite
+    call dein#add('bfredl/nvim-miniyank') " Yankring + denite source
 
-" General
-set mouse=a                                 " enable mouse
-set clipboard=unnamedplus                   " use system clipboard
-set encoding=utf-8                          " use utf8
-set fileformats+=mac                        " support mac EOLs
-set backspace=indent,eol,start              " allow backspacing over everything in insert mode.
-set autowriteall                            " save file on buffer change
-set autoread
-set history=2000                            " longer command history
-set spelllang=en_us                         " spellchecking, US english
-set showmatch                               " set show matching parenthesis
-let mapleader=","                           " define leader
-let maplocalleader="ß"                      " define local leader
-set timeoutlen=1000 ttimeoutlen=0           " avoid annoying delay when pressing ESC -> normal
-set nofoldenable                            " disable folding
+    " FZF
+    " call dein#add('junegunn/fzf', { 'build': './install --64 --no-key-bindings --no-completion --no-update-rc --no-fish', 'merged': 0 })
+    " call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+
+    " FS navigation
+    call dein#add('scrooloose/nerdtree')     " nerdtree file browser
+    call dein#add('Xuyuanp/nerdtree-git-plugin')     
+    call dein#add('justinmk/vim-dirvish')
+    call dein#add('justinmk/vim-gtfo')
+    call dein#add('dbakker/vim-projectroot')
+
+    " Languages
+    call dein#add('jalvesaq/Nvim-R') ", {'on_ft' : ['r', 'rmd', 'rdoc', 'rnoweb'], 'on_path' : ['DESCRIPTION', 'NAMESPACE']} )
+    call dein#add('mllg/vim-devtools-plugin', {'on_ft' : ['r', 'rmd', 'rdoc', 'rnoweb'], 'on_path' : ['DESCRIPTION', 'NAMESPACE']})
+    call dein#add('lervag/vimtex', {'on_ft' : ['tex', 'Rnw']})
+    call dein#add('octol/vim-cpp-enhanced-highlight')
+    call dein#add('keith/tmux.vim')
+    call dein#add('dag/vim-fish')
+    call dein#add('honza/dockerfile.vim')
+
+    call dein#end()
+    call dein#save_state()
+endif
+
+if dein#check_install()
+    call dein#install()
+endif
+
+
+filetype plugin indent on
+syntax on
+
+
+" ======================================================================================================================
+" Settings
+" ======================================================================================================================
+set cursorline
+set synmaxcol=1024
+set number
+set norelativenumber
+set showmode
+set textwidth=999
+set hidden
+set autowriteall
+set lazyredraw
+set encoding=utf-8
+set fileformats+=mac
+set nrformats-=octal
 set printoptions=paper:A4,number:y
-" backup files
-set backupdir=/tmp                          " swap files in one dir
-set directory=/tmp
-set nobackup
-set noswapfile
-" Visual
-set number                                  " line numbers
-syntax on                                   " syntax highlighting
-set laststatus=2                            " always show status bar
-set cursorline                              " show current edit line
-" Indentation + whitespace
-set expandtab 		                    " use spaces instead of tabs
-set shiftwidth=2                            " spaces used for autoindent and commands like >>.
-set softtabstop=2                           " spaces inserted by <Tab>.
-set shiftround                              " use multiple of shiftwidth when indenting with '<' and '>'
-set autoindent                              " copies indentation of last line, no problem with plugin indent
-filetype plugin indent on 	            " detect indentation type by filetype
-" autocmd BufWritePre *.[Rrc] :%s/\s\+$//ei " this removes trailing ws. bad for Rmd and md.
-                                            " also not perfect for diffs 
-                                            " also editorconfig is better for this i guess
-"Wrapping and long lines
-set wrap
-set textwidth=100
-set formatoptions=qrn1
-set colorcolumn=105
-" Searching.
-set gdefault                                " global substitutions on lines by default (/g turns it off).
-set hlsearch                                " highlight results.
-set incsearch                               " search-as-you-type.
-set ignorecase smartcase                    " case-insensitive unless we include uppercase.
-set wildignore+=*.Rcheck                    " Do not search .Rcheck
-" Unknown
+set title
+set undofile
+set showmatch
+set nojoinspaces
+set virtualedit=block
+set nostartofline
+set shortmess=aIT
+set mouse=a
+set clipboard=unnamedplus
+set conceallevel=0
+set noautochdir
+set shell=/bin/bash
+
+" Timeout
+set timeout
+set timeoutlen=750
+
+" Completion
+set completeopt=longest,menuone
 set wildmenu
-set wildmode=list:longest,full
-set nojoinspaces                            " 1 space, not 2, when joining sentences.
-" Colors
-set t_Co=256
+set wildignore+=.git,.svn
+set wildignore+=.DS_Store
+set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.o,*.lo,*.pdf
+
+" Indent
+set expandtab
+set tabstop=4
+set shiftwidth=0
+set softtabstop=-1
+set shiftround
+set smartindent
+set cinkeys=0{,0},0),:,!^F,o,O,e
+set wrap
+set breakindent
+inoremap # X<c-h>#
+
+" Search
+set inccommand=nosplit
+set hlsearch
+set smartcase
+set ignorecase
+set gdefault
+set wrapscan
+set magic
+
+" Splits
+set splitbelow
+set splitright
+set previewheight=25
+
+" Spelling
+set spelllang=en,de
+set spellsuggest=fast,20
+
+" ======================================================================================================================
+" Autocommands
+" ======================================================================================================================
+function! MakeSpellFiles()
+    for d in glob('~/.config/nvim/spell/*.add', 1, 1)
+        if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+            exec 'mkspell! ' . fnameescape(d)
+        endif
+    endfor
+endfunction
+augroup mkspellfiles
+    autocmd!
+    autocmd VimEnter * call MakeSpellFiles()
+augroup END
+
+
+function! <SID>AutoProjectRootCD()
+    try
+        if &ft != 'help'
+            ProjectRootCD
+        endif
+    catch
+        " Silently ignore invalid buffers
+    endtry
+endfunction
+augroup projectroot
+    autocmd!
+    autocmd BufEnter * call <SID>AutoProjectRootCD()
+augroup END
+
+
+function! SetTermOptions()
+    set nobuflisted
+    setlocal scrollback=10000
+    setlocal nonumber
+    nnoremap <buffer> <c-h> <Nop>
+    nnoremap <buffer> <c-l> <Nop>
+endfunction
+augroup terminal_fixes
+    autocmd TermOpen * call SetTermOptions()
+augroup END
+
+" ======================================================================================================================
+" Mappings
+" ======================================================================================================================
+let mapleader = ','
+let maplocalleader = 'ß'
+
+noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+
+nmap K <nop>
+map <c-h> :bp<cr>
+map <c-l> :bn<cr>
+inoremap <m-h> <left>
+inoremap <m-l> <right>
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap Y y$
+nnoremap Q @q
+nnoremap <backspace> :Sayonara!<cr>
+nnoremap <Del> :Sayonara<cr>
+vnoremap . :normal .<cr>
+
+" Keep search matches in the middle of the screen.
+nnoremap n nzz
+nnoremap N Nzz
+
+" After block yank and paste, move cursor to the end of operated text
+" Also, don't copy over-pasted text in visual mode
+vnoremap y y`]
+vnoremap p "_dP`]
+nnoremap p p`]
+
+nnoremap <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Windows resizing using arrow keys
+nnoremap <silent> <M-Left> :vertical resize -1<CR>
+nnoremap <silent> <M-Right> :vertical resize +1<CR>
+nnoremap <silent> <M-Up> :resize +1<CR>
+nnoremap <silent> <M-Down> :resize -1<CR>
+
+function s:UpdatePlugins()
+    call delete(g:dein#install_log_filename)
+    call dein#update()
+endfunction
+command Update call s:UpdatePlugins()
+
+command Cleanup call map(dein#check_clean(), "delete(v:val, 'rf')")
+command Print exec ':hardcopy >~/vimprint.ps'
+
+nmap <F9> :Gstatus<cr>
+
+
+" ======================================================================================================================
+" Plugin Config
+" ======================================================================================================================
+if dein#tap('vim-airline')
+    let g:airline_powerline_fonts = 1
+    let g:airline_extensions = ['branch', 'tabline', 'quickfix', 'whitespace', 'wordcount']
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline_highlighting_cache = 1
+endif
+
+if dein#tap('deoplete.nvim')
+    call deoplete#custom#option('auto_complete_delay', 250)
+    set shortmess+=c
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#enable_smart_case = 1
+    " let g:deoplete#_keyword_patterns = {'_' : '[a-zA-Z_ÄÖÜäöüß]\k*'}
+
+    call deoplete#custom#option('omni_patterns', {
+    \ 'r' : ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*', '\h\w*\w*', '\h\w*(w*']
+    \ })
+
+    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+        \ "\<Plug>(neosnippet_expand_or_jump)"
+        \: pumvisible() ? "\<C-n>" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+        \ "\<Plug>(neosnippet_expand_or_jump)"
+        \: "\<TAB>"
+endif
+
+if dein#tap('LanguageClient-neovim')
+    let g:LanguageClient_serverCommands = {
+        \ 'r': ['R', '--slave', '-e', 'languageserver::run()'],
+    \ }
+endif
+
+if dein#tap('fzf.vim')
+    function! s:build_quickfix_list(lines)
+      call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+      copen
+      cc
+    endfunction
+    let g:fzf_action = { 'ctrl-q': function('s:build_quickfix_list') }
+
+    nmap <silent> <c-o> :Files<cr>
+    nmap <silent> <c-g> :Rg<cr>
+    nmap <silent> <leader>b :Buffers<cr>
+    nmap <silent> <c-t> :Tags<cr>
+    nmap <silent> <leader>fw :call fzf#vim#grep('rg --column --line-number --no-heading --color=always '.shellescape(expand('<cword>')), 1)<cr>
+
+    " Disable fuzzy matching for grep
+    command! -bang -nargs=* Rg
+                \ call fzf#vim#grep(
+                \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+                \   { 'options' : '--exact'},
+                \   <bang>0)
+endif
+
+if dein#tap('denite.nvim')
+    nmap <silent> <c-t> :<C-u>Denite file_rec<cr>
+    nmap <silent> <c-o> :<C-u>DeniteProjectDir file_rec<cr>
+    nmap <silent> <c-g> :<C-u>Denite grep<cr>
+    nmap <silent> <leader>b :<C-u>Denite buffer<cr>
+    nmap <silent> <leader>d :<C-u>Denite directory_rec<cr>
+    nmap <silent> <leader>y :<C-u>Denite miniyank<cr>
+    nmap <silent> <leader>m :<C-u>Denite file_mru<cr>
+    nmap <silent> <leader>u :<C-u>Denite -resume<cr>
+    nmap <silent> <leader>n :<C-u>Denite -resume -select=+1 -immediately<cr>
+    nmap <silent> <leader>p :<C-u>Denite -resume -select=-1 -immediately<cr>
+    nmap <silent> <leader>fw :<C-u>DeniteCursorWord grep<CR><CR><C-W><CR>
+
+    call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+    call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+    "call denite#custom#option('default', 'statusline', 0)
+    call denite#custom#source('grep', 'args', ['', '', '!']) " grep interactively
+    call denite#custom#source('grep', 'sorters', []) " keep sort order of rg
+
+    if executable('rg')
+        call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+        call denite#custom#var('grep', 'command', ['rg'])
+        call denite#custom#var('grep', 'default_opts', ['--column', '--line-number', '--no-heading'])
+        call denite#custom#var('grep', 'recursive_opts', [])
+        call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+        call denite#custom#var('grep', 'separator', ['--'])
+        call denite#custom#var('grep', 'final_opts', [])
+    endif
+endif
+
+if dein#tap('neosnippet.vim')
+    let g:neosnippet#snippets_directory = expand('~/.config/nvim/neosnippets')
+    if !exists('g:neosnippet#scope_aliases')
+        let g:neosnippet#scope_aliases = {}
+    endif
+    let g:neosnippet#scope_aliases['rnoweb'] = 'rnoweb,tex'
+    let g:neosnippet#scope_aliases['rmd'] = 'rmd,markdown'
+endif
+
+if dein#tap('Nvim-R')
+    let g:R_complete = 2
+    let g:R_applescript = 0
+    let g:R_assign = 0
+    let g:R_close_term = 1
+    let g:R_in_buffer = 1
+    let g:rout_follow_colorscheme = 1
+    let g:R_nvimpager = "horizontal"
+    let g:R_openpdf = 0
+    let g:R_openhtml = 0
+    let g:R_tmux_title = "automatic"
+    let R_hl_term = 1
+    let g:r_indent_align_args = 0
+    let g:tex_conceal = ""
+    let R_synctex = 0
+    let R_latexcmd = ['pdflatex']
+    if !has("mac")
+        let g:R_pdfviewer = 'okular'
+    endif
+    vmap <LocalLeader><LocalLeader> <Plug>RDSendSelection
+    nmap <LocalLeader><LocalLeader> <Plug>RDSendLine
+endif
+
+if dein#tap('switch.vim')
+    let g:switch_custom_definitions = [['TRUE', 'FALSE']]
+    let g:switch_mapping = ""
+    nmap <silent> + :Switch<cr>
+endif
+
+
+if dein#tap('vim-startify')
+    let g:startify_bookmarks = [ {'n': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'r': '~/.Rprofile'} ]
+    let g:startify_change_to_dir = 0
+endif
+
+if dein#tap('vim-surround')
+    " yank command surrounding, useful for tex and Rd -> ys[motion]c
+    let g:surround_99 = "\\\1cmd\1{\r}"
+endif
+
+if dein#tap('vim-gtfo')
+    let g:gtfo#terminals = { 'unix' : 'konsole --workdir' }
+endif
+
+if dein#tap('vim-projectroot')
+    nnoremap <leader>cp :ProjectRootCD<cr>
+    let g:rootmarkers = ['DESCRIPTION','.svn','.hg','.git']
+endif
+
+if dein#tap('vim-easy-align')
+    vmap <Enter> <Plug>(EasyAlign)
+    xmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
+endif
+
+if dein#tap('vim-move')
+    let g:move_map_keys = 0
+    nmap <C-j> <Plug>MoveLineDown
+    nmap <C-k> <Plug>MoveLineUp
+    vmap <C-j> <Plug>MoveBlockDown
+    vmap <C-k> <Plug>MoveBlockUp
+endif
+
+if dein#tap('ale')
+    let g:ale_enabled = 0
+endif
+
+if dein#tap('vimtex')
+    let g:tex_flavor = 'latex'
+    let g:vimtex_compiler_progname = 'nvr'
+endif
+
+if dein#tap('nvim-miniyank')
+    map p <Plug>(miniyank-autoput)
+    map P <Plug>(miniyank-autoPut)
+    " map <leader>p <Plug>(miniyank-startput)
+    " map <leader>P <Plug>(miniyank-startPut)
+    nmap <c-n> <Plug>(miniyank-cycle)
+endif
+
+if dein#tap('far.vim')
+    let g:far#window_layout = 'tab'
+    let g:far#source = 'rg'
+
+endif
+
+
+" ======================================================================================================================
+" Colorscheme / Terminal
+" ======================================================================================================================
 set background=dark
-" colorscheme solarized
-" Invisible symbols
-set listchars=tab:▸\ ,eol:¬                 " Symbols for tabstops and EOLs
-" Invisible character colors
-highlight NonText guifg=#4a4a59
-highlight SpecialKey guifg=#4a4a59
-" completion
-"set omnifunc=syntaxcomplete#Complete
-" set completeopt=longest,menuone
-" ctags
-set tags=~/cos/linux-stuff/tags
+set t_Co=256
+if has("termguicolors")
+    set termguicolors
+endif
 
+if !empty($KONSOLE_PROFILE_NAME)
+    set guicursor=
+endif
 
-" FZF fuzzy finder
-set rtp+=~/.fzf
+if dein#tap('gruvbox')
+    colorscheme gruvbox
+    hi! link rPreProc GruvboxBlue
+    hi! link rFunction GruvboxAqua
+    hi! link rCommentTodo GruvboxOrange
+    hi! link rOperator GruvboxRed
+    hi! link rLstElmt GruvboxPurple
+    hi! link rOperator GruvBoxBlue
+    hi! link rDelimiter GruvboxFg3
+endif
 
 " nerdtree settings
-let g:NERDTreeMouseMode = 2
-let g:NERDTreeWinSize = 40
+" let g:NERDTreeMouseMode = 2
+" let g:NERDTreeWinSize = 40
 let NERDTreeShowHidden = 1          " show hidden files
-let NERDTreeIgnore = ['\.git$']     " dont show swp files in tree
-let NERDTreeQuitOnOpen = 0          "dont close after open
-
-
-" CtrlP
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](\.git|\.hg|\.svn|pkg)$',
-      \ 'file': '\v\.(exe|so|dllpyc|swp)$'
-      \ }
-let g:ctrlp_mruf_last_entered = 1
-let g:ctrlp_mruf_relative = 1
-" always open ctrp file in new tab
-let g:ctrlp_prompt_mappings = {
-      \ 'AcceptSelection("e")': ['<c-t>'],
-      \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>']
-      \ }
-let g:ctrlp_tabpage_position = 'al' " always open after last tab
-
-" super tab
-" let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-let g:SuperTabDefaultCompletionType = "context"
-
-" R Plugin
-let R_in_buffer = 0                   " for tmux
-let R_applescript = 0                 " for tmux  
-let R_tmux_split = 1                  " for tmux
-let R_assign = 0                      " dont convert underscore in <-
-" let vimrplugin_start_libs = "base,stats,graphics,grDevices,utils,methods,BBmisc,checkmate"
-" let vimrplugin_notmuxconf = 1               " do not let plugin configure tmux
-let r_indent_align_args = 0                 " dont align function args when they span multiple lines
-" let g:vimrplugin_insert_mode_cmds = 0       " dont allow R commands in insert mode
-" let g:vimrplugin_vimpager = "vertical"      " where to show R help page in vim
-" let g:vimrplugin_restart = 1                " allow R restart oon hotkey
-" R Hotkeys
-vmap <LocalLeader><LocalLeader> <Plug>RDSendSelection
-nmap <LocalLeader><LocalLeader> <Plug>RDSendLine
-imap <C-w> <Plug>RCompleteArgs
-map <LocalLeader>h <LocalLeader>rh
-map <LocalLeader>a <LocalLeader>ra
-map <LocalLeader>p <LocalLeader>rp
-map <LocalLeader>u :RUpdateObjList<cr>
-map <LocalLeader>f <Plug>RDSendFunction
-map <LocalLeader>s <LocalLeader>rs
-
-" Scratch plugin, set scratch buffer to r file type
-let g:scratch_filetype='r'
-
-" Latexbox
-let g:LatexBox_quickfix=2
-let g:LatexBox_ignore_warnings = ['Underfull', 'Overfull', 'specifier changed to', 'Font shape', 'Some font shapes', 'Size substitutions']
-
-" easyclip use s for motion to replace, eg word with siw or line with ss
-let g:EasyClipUseSubstituteDefaults = 1
+" let NERDTreeIgnore = ['\.git$']     " dont show swp files in tree
+" let NERDTreeQuitOnOpen = 0          "dont close after open
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 " F-Keys
 " toggle nerdtree
-nnoremap <f1> :NERDTreeTabsToggle<cr>
+nnoremap <f1> :NERDTreeToggle<cr>
 inoremap <f1> <nop>
 vnoremap <f1> <nop>
 " invoke ctrlp
-let g:ctrlp_map = '<f2>'
+" let g:ctrlp_map = '<f2>'
+nnoremap <f2> :<C-u>Denite file_rec<cr>
 inoremap <f2> <nop>
 vnoremap <f2> <nop>
 nnoremap <f3> <Esc>:Ack!
@@ -209,34 +519,6 @@ nnoremap <F11> :set list!<CR>
 nnoremap <F12> :set wrap!<CR>
 " nnoremap <F12> :RainbowParenthesesToggle<cr>
 
-
-
-" Arrow keys
-nmap <silent> <S-Left> :tabprev<CR>
-nmap <silent> <S-Right> :tabnext<CR>
-noremap <silent> <C-Left> :wincmd h<cr>
-noremap <silent> <C-Right> :wincmd l<cr>
-noremap <silent> <C-Up> :wincmd k<cr>
-noremap <silent> <C-Down> :wincmd j<cr>
-
-
-
-" Make Vim recognize XTerm escape sequences for Page and Arrow
-" keys combined with modifiers such as Shift, Control, and Alt.
-" See http://www.reddit.com/r/vim/comments/1a29vk/_/c8tze8p
-if &term =~ '^screen'
-  " Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
-  execute "set t_kP=\e[5;*~"
-  execute "set t_kN=\e[6;*~"
-
-  " Arrow keys http://unix.stackexchange.com/a/34723
-  execute "set <xUp>=\e[1;*A"
-  execute "set <xDown>=\e[1;*B"
-  execute "set <xRight>=\e[1;*C"
-  execute "set <xLeft>=\e[1;*D"
-endif
-map <Esc>[B <Down>
-
 " Other hotkeys
 " close buffer
 nnoremap <C-x> :q<cr>
@@ -253,30 +535,4 @@ nmap <silent> <localleader>p :hardcopy >~/.cache/vim/lastprint.ps<cr>:!xdg-open 
 nnoremap <cr> i<Enter><Esc>
 " ctrl-tab for omni completion
 inoremap <S-tab> <C-x><C-o>
-
-function! Preserve(command)
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  execute a:command
-  let @/=_s
-  call cursor(l, c)
-endfunction
-
-function! StripTrailingWhitespace()
-  call Preserve("%s/\\s\\+$//e")
-endfunction
-
-function! AddAssignSpaces()
-  call Preserve("%s,\\(\\S\\)=\\(\\S\\),\\1 = \\2,")
-endfunction
-
-function! ConvertAssignArrow()
-  call Preserve("%s,<-,=,")
-endfunction
-
-function FindNonAscii()
-  call Preserve("/[^\x00-\x7F]")
-endfunction
-
 

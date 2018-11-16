@@ -483,6 +483,8 @@ let NERDTreeShowHidden = 1          " show hidden files
 " let NERDTreeQuitOnOpen = 0          "dont close after open
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+let NERDTreeMapOpenInTab='\t'   " remap nerdtree tab open to something weird, because i dont want to accidently open tabs
+
 
 " F-Keys
 " toggle nerdtree

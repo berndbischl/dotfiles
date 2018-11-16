@@ -41,6 +41,7 @@ if dein#load_state(expand('~/.cache/dein'))
     " Edit helpers
     call dein#add('editorconfig/editorconfig-vim') " Support for editorconfig
     call dein#add('matze/vim-move') " Move lines with <c-h> etc
+    call dein#add('svermeulen/vim-easyclip')  " better copy-paste with dd, ss, and mm, etc
     call dein#add('itspriddle/vim-stripper', {'on_cmd' : 'Stripper'}) " Remove trailing whitespace
     call dein#add('christoomey/vim-titlecase') " switch titlecase with gt+movement
     call dein#add('tpope/vim-commentary') " Comment with gc
@@ -232,8 +233,6 @@ vnoremap > >gv
 
 nnoremap Y y$
 nnoremap Q @q
-nnoremap <backspace> :Sayonara!<cr>
-nnoremap <Del> :Sayonara<cr>
 vnoremap . :normal .<cr>
 
 " Keep search matches in the middle of the screen.
@@ -520,8 +519,7 @@ nnoremap <F12> :set wrap!<CR>
 " nnoremap <F12> :RainbowParenthesesToggle<cr>
 
 " Other hotkeys
-" close buffer
-nnoremap <C-x> :q<cr>
+nnoremap <C-x> :Sayonara<cr>
 " Use CTRL-S for saving, also in insert mode, we always end in normal
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>

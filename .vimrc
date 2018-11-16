@@ -390,6 +390,9 @@ if dein#tap('switch.vim')
     nmap <silent> + :Switch<cr>
 endif
 
+if dein#tap('switch.vim')
+    let g:EasyClipUseSubstituteDefaults = 1
+endif
 
 if dein#tap('vim-startify')
     let g:startify_bookmarks = [ {'n': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'r': '~/.Rprofile'} ]

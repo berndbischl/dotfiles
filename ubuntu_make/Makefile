@@ -150,7 +150,7 @@ links:
 	ln -fs ~/cos/dotfiles/.tmux.conf ~/.tmux.conf
 	ln -fs ~/cos/dotfiles/.Renviron ~/.Renviron
 	ln -fs ~/cos/dotfiles/.Rprofile ~/.Rprofile
-	ln -fs ~/cos/dotfiles/.vimrc ~/.config/nvim/init.vim
+	ln -fs ~/cos/dotfiles/.config/nvim ~/.config/nvim
 	ln -fs ~/cos/dotfiles/.gitconfig ~/.gitconfig
 	ln -fs ~/cos/dotfiles/.openml ~/.openml
 	ln -fs ~/cos/dotfiles/bin ~/bin

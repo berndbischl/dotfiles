@@ -34,9 +34,9 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('Shougo/deoplete.nvim') " Completion
     call dein#add('Shougo/neco-vim') " vim completion
     call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
-    call dein#add('ponko2/deoplete-fish')
-    call dein#add('ujihisa/neco-look')
-    " call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
+    " call dein#add('ponko2/deoplete-fish')
+    call dein#add('ujihisa/neco-look') " word complete from dictionaries 
+    call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
 
     " Edit helpers
     call dein#add('editorconfig/editorconfig-vim') " Support for editorconfig
@@ -46,7 +46,7 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('christoomey/vim-titlecase') " switch titlecase with gt+movement
     call dein#add('tpope/vim-commentary') " Comment with gc
     call dein#add('tpope/vim-surround') " Delete, add and change surroundings
-    call dein#add('wellle/targets.vim') " More text objects
+    call dein#add('wellle/targets.vim') " More text objects, eg fun args are textobjects and we can do cia
     call dein#add('michaeljsmith/vim-indent-object') " Indentation objects for targets
     call dein#add('junegunn/vim-easy-align') " Align on operators
     call dein#add('AndrewRadev/switch.vim') " Switch values like true/false with gs
@@ -74,8 +74,8 @@ if dein#load_state(expand('~/.cache/dein'))
     " call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
     " FS navigation
-    call dein#add('scrooloose/nerdtree')     " nerdtree file browser
-    call dein#add('Xuyuanp/nerdtree-git-plugin')     
+    " call dein#add('scrooloose/nerdtree')     " nerdtree file browser
+    " call dein#add('Xuyuanp/nerdtree-git-plugin')     
     call dein#add('justinmk/vim-dirvish')
     call dein#add('justinmk/vim-gtfo')
     call dein#add('dbakker/vim-projectroot')
@@ -224,8 +224,6 @@ noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
 noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 nmap K <nop>
-map <c-h> :bp<cr>
-map <c-l> :bn<cr>
 inoremap <m-h> <left>
 inoremap <m-l> <right>
 vnoremap < <gv
@@ -276,7 +274,7 @@ if dein#tap('vim-airline')
 endif
 
 if dein#tap('deoplete.nvim')
-    call deoplete#custom#option('auto_complete_delay', 250)
+    call deoplete#custom#option('auto_complete_delay', 1000)
     set shortmess+=c
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#enable_smart_case = 1
@@ -335,8 +333,8 @@ if dein#tap('denite.nvim')
     nmap <silent> <leader>p :<C-u>Denite -resume -select=-1 -immediately<cr>
     nmap <silent> <leader>fw :<C-u>DeniteCursorWord grep<CR><CR><C-W><CR>
 
-    call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-    call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+    call denite#custom#map('insert', '<down>', '<denite:move_to_next_line>', 'noremap')
+    call denite#custom#map('insert', '<up>', '<denite:move_to_previous_line>', 'noremap')
     "call denite#custom#option('default', 'statusline', 0)
     call denite#custom#source('grep', 'args', ['', '', '!']) " grep interactively
     call denite#custom#source('grep', 'sorters', []) " keep sort order of rg
@@ -475,22 +473,29 @@ if dein#tap('gruvbox')
     hi! link rDelimiter GruvboxFg3
 endif
 
-" nerdtree settings
-" let g:NERDTreeMouseMode = 2
-" let g:NERDTreeWinSize = 40
-let NERDTreeShowHidden = 1          " show hidden files
-" let NERDTreeIgnore = ['\.git$']     " dont show swp files in tree
-" let NERDTreeQuitOnOpen = 0          "dont close after open
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let NERDTreeMapOpenInTab='\t'   " remap nerdtree tab open to something weird, because i dont want to accidently open tabs
+" " nerdtree settings
+" " let g:NERDTreeMouseMode = 2
+" " let g:NERDTreeWinSize = 40
+" let NERDTreeShowHidden = 1          " show hidden files
+" " let NERDTreeIgnore = ['\.git$']     " dont show swp files in tree
+" " let NERDTreeQuitOnOpen = 0          "dont close after open
+" let NERDTreeMinimalUI = 1
+" let NERDTreeDirArrows = 1
+" let NERDTreeMapOpenInTab='\t'   " remap nerdtree tab open to something weird, because i dont want to accidently open tabs
 
+" Arrow keys
+nmap <silent> <S-Left> :bp<CR>
+nmap <silent> <S-Right> :bn<CR>
+noremap <silent> <C-Left> :wincmd h<cr>
+noremap <silent> <C-Right> :wincmd l<cr>
+noremap <silent> <C-Up> :wincmd k<cr>
+noremap <silent> <C-Down> :wincmd j<cr>
 
 " F-Keys
 " toggle nerdtree
-nnoremap <f1> :NERDTreeToggle<cr>
-inoremap <f1> <nop>
-vnoremap <f1> <nop>
+" nnoremap <f1> :NERDTreeToggle<cr>
+" inoremap <f1> <nop>
+" vnoremap <f1> <nop>
 " invoke ctrlp
 " let g:ctrlp_map = '<f2>'
 nnoremap <f2> :<C-u>Denite file_rec<cr>
@@ -539,3 +544,12 @@ nnoremap <cr> i<Enter><Esc>
 " ctrl-tab for omni completion
 inoremap <S-tab> <C-x><C-o>
 
+augroup rnw_fix_spell
+   autocmd!
+   autocmd FileType rnoweb :syntax spell toplevel
+augroup END
+
+
+" command completion
+" type prefix, then wait, select with arrow keys, then hit return
+" how to trigger completion on key?

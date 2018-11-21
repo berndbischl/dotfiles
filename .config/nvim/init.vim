@@ -167,6 +167,7 @@ set magic
 set splitbelow
 set splitright
 set previewheight=25
+set diffopt+=vertical
 
 " Spelling
 set spelllang=en,de
@@ -540,7 +541,7 @@ vmap <C-y> gc
 " print
 nmap <silent> <localleader>p :hardcopy >~/.cache/vim/lastprint.ps<cr>:!xdg-open ~/.cache/vim/lastprint.ps &<cr>
 " enter works in normal mode
-nnoremap <cr> i<Enter><Esc>
+" nnoremap <cr> i<Enter><Esc>
 " ctrl-tab for omni completion
 inoremap <S-tab> <C-x><C-o>
 
@@ -553,3 +554,58 @@ augroup END
 " command completion
 " type prefix, then wait, select with arrow keys, then hit return
 " how to trigger completion on key?
+"
+"
+" search for files
+" strg-o : search for file names recursively, under git project dir
+" strg-t : search for file names recursively, under same dir as current buffer file
+"
+" search for words
+" strg-g: search for words in files under current git project dir
+" ,fw: search for word currently under cursor
+
+" ,n : go to next match
+" ,p : go to prev match
+" ,u : display match list again
+"
+"
+" search replace over files
+" :Far pattern replacement r 
+" :Fardo
+"
+" vim surround
+" edit words wrt quotes or parentheses 
+" eg we now have ci' -> change in <single quotes>; or yi'; or di'
+" or yi( 
+"
+" CAPSLOCK: Escape, got to normal mode
+"
+" dirvish:
+" - : open dirvish, go up one dir
+" enter: open file in buffer
+" q: exit dirvish
+"
+"
+" R:
+" \rp: print object
+" \rs: str object
+" \rh: help page of word
+" \kr: render file
+" \kp: knit2pdf
+"
+" :RLoadpackage : loads current package
+" CTRL-] : go to definition of function under cursor
+"
+" fugitive
+" Gread
+" Gwrite
+" Gcommit
+" Gmove
+" Git checkout
+" Gblame
+" <git aliases also work>
+
+" Gitgutter
+" nmap <Leader>hs <Plug>GitGutterStageHunk
+" nmap <Leader>hr <Plug>GitGutterRevertHunk
+" nmap <Leader>hp <Plug>GitGutterPreviewHunkP

@@ -1,4 +1,5 @@
 bin/vim
 bin/dt
 bin/ack-grep
+.config/nvim/spell/*.add.spl
 

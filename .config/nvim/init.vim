@@ -609,3 +609,11 @@ augroup END
 " nmap <Leader>hs <Plug>GitGutterStageHunk
 " nmap <Leader>hr <Plug>GitGutterRevertHunk
 " nmap <Leader>hp <Plug>GitGutterPreviewHunkP
+"
+"
+" spell checking
+" f9: toggle it
+" ]s: next error
+" [s: prev error
+" z=: correct with popupo list
+" zg: add it to dict

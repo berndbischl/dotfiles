@@ -178,5 +178,7 @@ ubuntu-shortcuts:
 	# use super-up/down to change ubuntu workspaces
 	gsettings set .org.gnome.desktop.wm.keybindings.move-to-workspace-down	"['<Primary><Super>Down']"	
 	gsettings set .org.gnome.desktop.wm.keybindings.move-to-workspace-up	"['<Primary><Super>Up']"	
+	gsettings set .org.gnome.desktop.wm.keybindings.maximize	"['<Super>Page_Up']"	
+
 
 

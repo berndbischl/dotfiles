@@ -622,3 +622,7 @@ augroup END
 " [s: prev error
 " z=: correct with popupo list
 " zg: add it to dict
+"
+"
+" editing
+" c%: change matching stuff, changes everyting until a "match" occurs so foooooo(blaaaaaaa)

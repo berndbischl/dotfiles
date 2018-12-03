@@ -368,7 +368,7 @@ if dein#tap('neosnippet.vim')
 endif
 
 if dein#tap('Nvim-R')
-    let R_rconsole_width = 57                 " ensure that we always getting a vertical split by using a low nr here 
+    let R_rconsole_width = 70                 " ensure that we always getting a vertical split by using a low nr here 
     let R_min_editor_width = 18               " ensure that we always getting a vertical split by using a low nr here  
     let g:R_complete = 2                      " omni-completion : always include names of objects
     let g:R_assign =0                         " disable underscore replacement.

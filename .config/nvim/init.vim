@@ -208,9 +208,12 @@ function! SetTermOptions()
     set nobuflisted
     setlocal scrollback=10000
     setlocal nonumber
+    setlocal ft=rterminal   " set a nice filetype for the terminal, so we can act on it, eg with sayonara
     " disable buffer change in rterminal. that fucks the rterminal as we are now in another buffer where terminal should be 
     nnoremap <buffer> <s-left> <Nop>
     nnoremap <buffer> <s-right> <Nop>
+    " disable buffer dirvish too
+    nnoremap <buffer> - <Nop>
 endfunction
 augroup terminal_fixes
     autocmd TermOpen * call SetTermOptions()
@@ -456,6 +459,13 @@ if dein#tap('vim-gitgutter')
     set updatetime=100      " ensure that gitgutter updates quickly enough     
 endif
 
+if dein#tap('vim-sayonara')
+    let g:sayonara_confirm_quit = 1   " make sayonare ask before it deletes the last buffer and quits vim 
+    " if we are in the rterminal window, kill the buffer and the window
+    let g:sayonara_filetypes = {
+        \ 'rterminal': 'bdelete!',    
+        \ }
+endif
 
 " ======================================================================================================================
 " Colorscheme / Terminal
@@ -531,7 +541,12 @@ nnoremap <F12> :set wrap!<CR>
 " nnoremap <F12> :RainbowParenthesesToggle<cr>
 
 " Other hotkeys
+" CTRL-x to close buffer with sayonara!, keep the current window (as we have other stuff open and dont want to fuckup the layout)
+" this is the default we basically apply to any open file
 nnoremap <C-x> :Sayonara!<cr>
+" shift-x to close buffer AND the window, if we want to change splits
+" we shouldnt really need this, as this should nbe handled by our Sayonara dictionary 
+nnoremap <s-x> :Sayonara<cr>
 " Use CTRL-S for saving, also in insert mode, we always end in normal
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
@@ -633,14 +648,6 @@ augroup END
 "
 "
 " FRAGEN
-" wieso kommen die sachen mit CTRL-O manchmal oben nicht in die buffer list wie beim dirvish?
-" die r konsole verschwinder immet mal wieder wenn man in den buffern rumklickt. wie macht man die scihtbar oder schaltet sie in den hintergrund?
-" hat das was mit der rkonsole zu tun und dem buffer split?
-" ---> arrow-keys  buffer switch für den buffer ausmachen
-" ---> ist außerdem ein bug, michel guckt nach. have das jetzt über sayonara gelöst, so dass windows nicht zugehen.
-"  optimal ist das aber auch nicht, vorallem im fugitive diff und bei einigen anderen sachen
-"
-"
 "
 " kommando für Far, um replace zu togglen in der preview?
 " wie macht man far nur auf ein sbestimmtes verzeichnis?
@@ -678,5 +685,4 @@ augroup END
 " nmap [h <Plug>GitGutterPrevHunkP
 "
 " kann man irgendwie supper schnell einen git diff der aktuellen file sehen?
-"
 "

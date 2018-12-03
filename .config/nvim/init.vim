@@ -490,17 +490,18 @@ noremap <silent> <C-Left> :wincmd h<cr>
 noremap <silent> <C-Right> :wincmd l<cr>
 noremap <silent> <C-Up> :wincmd k<cr>
 noremap <silent> <C-Down> :wincmd j<cr>
-
+nnoremap <f1> <c-w>5<
+nnoremap <f2> <c-w>5>
 
 " map f1 to NOP so we dont display help
-nnoremap <f1> <esc>
-inoremap <f1> <esc>
-vnoremap <f1> <esc>
+" nnoremap <f1> <esc>
+" inoremap <f1> <esc>
+" vnoremap <f1> <esc>
 
 " let f2 + f3 do notrhing for now 
-nnoremap <f2> <esc>
-inoremap <f2> <esc>
-vnoremap <f2> <esc>
+" nnoremap <f2> <esc>
+" inoremap <f2> <esc>
+" vnoremap <f2> <esc>
 nnoremap <f3> <esc>
 inoremap <f3> <esc>
 vnoremap <f3> <esc>
@@ -633,10 +634,13 @@ augroup END
 "
 " FRAGEN
 " wieso kommen die sachen mit CTRL-O manchmal oben nicht in die buffer list wie beim dirvish?
-" hat das was mit der rkonsole zu tun und dem buffer split?
-" ---> keys für den buffer ausmachen, ist außerdem ein bug, miche guckt nach
-"
 " die r konsole verschwinder immet mal wieder wenn man in den buffern rumklickt. wie macht man die scihtbar oder schaltet sie in den hintergrund?
+" hat das was mit der rkonsole zu tun und dem buffer split?
+" ---> arrow-keys  buffer switch für den buffer ausmachen
+" ---> ist außerdem ein bug, michel guckt nach. have das jetzt über sayonara gelöst, so dass windows nicht zugehen.
+"  optimal ist das aber auch nicht, vorallem im fugitive diff und bei einigen anderen sachen
+"
+"
 "
 " kommando für Far, um replace zu togglen in der preview?
 " wie macht man far nur auf ein sbestimmtes verzeichnis?
@@ -665,9 +669,14 @@ augroup END
 " ---> irgendwie sehen die fonts nicht anders aus? ich kann aber auch keine probleme sehen? mal michel fragen?
 "
 " https://coderwall.com/p/crj69a/from-a-useless-git-diff-to-a-useful-one"
-"
-" mein Rterminal soll immer an einer stelle auftaucehn, nicht mal links mal rechts.
-" und ich brauche einen key für resize
 
 " fragen:
 " wie renamed / moved man files schnell
+"
+" bessere gitgutter movenets next und prev setzen. mal gucken wo man sonst sowas noch hat ",n" usw
+" nmap ]h <Plug>GitGutterNextHunk
+" nmap [h <Plug>GitGutterPrevHunkP
+"
+" kann man irgendwie supper schnell einen git diff der aktuellen file sehen?
+"
+"

@@ -59,6 +59,9 @@ fonts:
 	rm -f ~/.fonts/*
 	wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf -O ~/.fonts/Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete.otf
 	fc-cache -v
+	# install cooler nerdfonts for special chars in vim
+	$(call gitclone2cos,ryanoasis,nerd-fonts)   
+	~/cos/nerd-fonts/install.sh Hack
 
 google_chrome:
 	rm -f google-chrome-stable_current_amd64.deb

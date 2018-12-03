@@ -365,24 +365,23 @@ if dein#tap('neosnippet.vim')
 endif
 
 if dein#tap('Nvim-R')
-    let g:R_complete = 2
-    let g:R_applescript = 0
-    let g:R_assign = 0
-    let g:R_close_term = 1
-    let g:R_in_buffer = 1
-    let g:rout_follow_colorscheme = 1
-    let g:R_nvimpager = "horizontal"
-    let g:R_openpdf = 0
-    let g:R_openhtml = 0
-    let g:R_tmux_title = "automatic"
-    let R_hl_term = 1
-    let g:r_indent_align_args = 0
-    let g:tex_conceal = ""
-    let R_synctex = 0
-    let R_latexcmd = ['pdflatex']
-    if !has("mac")
-        let g:R_pdfviewer = 'okular'
-    endif
+    let R_rconsole_width = 57                 " ensure that we always getting a vertical split by using a low nr here 
+    let R_min_editor_width = 18               " ensure that we always getting a vertical split by using a low nr here  
+    let g:R_complete = 2                      " omni-completion : always include names of objects
+    let g:R_assign =0                         " disable underscore replacement.
+    let g:R_close_term = 1                    " Close terminal buffer after R quited 
+    let g:R_in_buffer = 1                     " Run R in Vim/Neovim built in terminal emulator
+    let g:rout_follow_colorscheme = 1         " R output is highlighted
+    let g:R_nvimpager = "horizontal"          " Use Vim to see R documentation, 
+    let g:R_openpdf = 0                       " Open PDF after processing rnoweb file
+    let g:R_openhtml = 0                      " Open HTML after processing either Rrst or Rmd
+    " let g:R_tmux_title = "automatic"        " seems not to exist anymore
+    let R_hl_term = 1                         " Syntax highlight terminal as rout file type
+    " let g:r_indent_align_args = 0           " seems not to exits anymore 
+    " let g:tex_conceal = ""                  " seems not to exist anymore
+    let R_synctex = 0                         " disable SyncTeX support
+    let R_latexcmd = ['pdflatex']             " Command to run on .tex files
+    let g:R_pdfviewer = 'okular'              " PDF viewer to open PDF documents
     vmap <LocalLeader><LocalLeader> <Plug>RDSendSelection
     nmap <LocalLeader><LocalLeader> <Plug>RDSendLine
 endif
@@ -536,6 +535,8 @@ nnoremap <C-x> :Sayonara!<cr>
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 inoremap <C-S> <C-C>:update<CR>
+" Use CTRL-Q to exit completely 
+noremap <C-Q> :q!<CR>
 " vim-commentary
 nmap <C-y> gccj
 vmap <C-y> gc
@@ -568,6 +569,12 @@ augroup END
 " ,n : go to next match
 " ,p : go to prev match
 " ,u : display match list again
+"
+" search-replace in current buffer 
+" (we also see what happens when we type the replace)
+" %s/foo/bar                 " replace all foo to bar in all lines 
+" '<,'>s/foo/bar             " replace foo to bar in all visually selected lines
+" adding a /c asks us for confirm whether we wanna do the replace 
 "
 "
 " search replace over files
@@ -632,12 +639,11 @@ augroup END
 " die r konsole verschwinder immet mal wieder wenn man in den buffern rumklickt. wie macht man die scihtbar oder schaltet sie in den hintergrund?
 "
 " kommando für Far, um replace zu togglen in der preview?
-"
 " wie macht man far nur auf ein sbestimmtes verzeichnis?
+" --> das rg bei far ausstellen, dann die far-docs lesen ob man trotzdem noch far recursive auf alle 
+"  files im project root machen kann
 "
 " man braucht echt einen key um das autocomplete selber zu triggern. und in R werden namen aus der aktuellen date einfach nicht angezeigt
-"
-"
 "
 " mal vim bessere keys lernen. 
 " - edit am ender der zeile
@@ -656,11 +662,9 @@ augroup END
 " michel [5:41 PM]
 " https://github.com/ryanoasis/nerd-fonts
 " Ich benutze Hack"
-"
-" wie kann man search replace nur in den lines machen die visuell markiert worden sind?
+" ---> irgendwie sehen die fonts nicht anders aus? ich kann aber auch keine probleme sehen? mal michel fragen?
 "
 " https://coderwall.com/p/crj69a/from-a-useless-git-diff-to-a-useful-one"
-"
 "
 " mein Rterminal soll immer an einer stelle auftaucehn, nicht mal links mal rechts.
 " und ich brauche einen key für resize

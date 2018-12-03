@@ -18,7 +18,6 @@ options(
   java.parameters="-Xrs" # so rJava does not kill session on CTRL-C
 )
 
-#options(error = function() traceback(2))
 ### set locales
 #tmp = Sys.setlocale("LC_MESSAGES", "en_US.UTF-8")
 #tmp = Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
@@ -37,6 +36,7 @@ if (interactive()) {
   library(testthat)
   loadhistory("~/.Rhistory")
   Sys.setenv(R_HISTSIZE=5000)
+  options(error = function() traceback(2)) # enable automatic display of traceback
 
   messagef("Work dir: %s", getwd())
 }

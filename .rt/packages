@@ -44,7 +44,6 @@ Ckmeans.1d.dp
 class
 clue
 cluster
-clusterSim
 clValid
 cmaes
 cmaesr
@@ -225,7 +224,6 @@ mlr
 mlrCPO
 mlrMBO
 mnormt
-modeest
 ModelMetrics
 modelr
 modeltools

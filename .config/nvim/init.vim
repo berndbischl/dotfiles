@@ -36,7 +36,7 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
     " call dein#add('ponko2/deoplete-fish')
     call dein#add('ujihisa/neco-look') " word complete from dictionaries 
-    call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
+    " call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
 
     " Edit helpers
     call dein#add('editorconfig/editorconfig-vim') " Support for editorconfig
@@ -75,9 +75,7 @@ if dein#load_state(expand('~/.cache/dein'))
     " call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
     " FS navigation
-    " call dein#add('scrooloose/nerdtree')     " nerdtree file browser
-    " call dein#add('Xuyuanp/nerdtree-git-plugin')     
-    call dein#add('justinmk/vim-dirvish')
+    call dein#add('justinmk/vim-dirvish')  " displays a very nice little filebrowser adhoc to open stuff
     call dein#add('justinmk/vim-gtfo')
     call dein#add('dbakker/vim-projectroot')
 
@@ -131,6 +129,7 @@ set clipboard=unnamedplus
 set conceallevel=0
 set noautochdir
 set shell=/bin/bash
+set noswapfile   " i dont like recovering of swap files
 
 " Timeout
 set timeout
@@ -209,8 +208,9 @@ function! SetTermOptions()
     set nobuflisted
     setlocal scrollback=10000
     setlocal nonumber
-    nnoremap <buffer> <c-h> <Nop>
-    nnoremap <buffer> <c-l> <Nop>
+    " disable buffer change in rterminal. that fucks the rterminal as we are now in another buffer where terminal should be 
+    nnoremap <buffer> <s-left> <Nop>
+    nnoremap <buffer> <s-right> <Nop>
 endfunction
 augroup terminal_fixes
     autocmd TermOpen * call SetTermOptions()
@@ -274,6 +274,9 @@ if dein#tap('vim-airline')
     let g:airline#extensions#tabline#enabled = 1
     let g:airline_highlighting_cache = 1
 endif
+
+
+
 
 if dein#tap('deoplete.nvim')
     call deoplete#custom#option('auto_complete_delay', 1000)
@@ -479,17 +482,9 @@ if dein#tap('gruvbox')
     hi! link rDelimiter GruvboxFg3
 endif
 
-" " nerdtree settings
-" " let g:NERDTreeMouseMode = 2
-" " let g:NERDTreeWinSize = 40
-" let NERDTreeShowHidden = 1          " show hidden files
-" " let NERDTreeIgnore = ['\.git$']     " dont show swp files in tree
-" " let NERDTreeQuitOnOpen = 0          "dont close after open
-" let NERDTreeMinimalUI = 1
-" let NERDTreeDirArrows = 1
-" let NERDTreeMapOpenInTab='\t'   " remap nerdtree tab open to something weird, because i dont want to accidently open tabs
 
 " Arrow keys
+" go to left/right buffer with shift-arrow
 nmap <silent> <S-Left> :bp<CR>
 nmap <silent> <S-Right> :bn<CR>
 noremap <silent> <C-Left> :wincmd h<cr>
@@ -497,19 +492,20 @@ noremap <silent> <C-Right> :wincmd l<cr>
 noremap <silent> <C-Up> :wincmd k<cr>
 noremap <silent> <C-Down> :wincmd j<cr>
 
-" F-Keys
-" toggle nerdtree
-" nnoremap <f1> :NERDTreeToggle<cr>
-" inoremap <f1> <nop>
-" vnoremap <f1> <nop>
-" invoke ctrlp
-" let g:ctrlp_map = '<f2>'
-nnoremap <f2> :<C-u>Denite file_rec<cr>
-inoremap <f2> <nop>
-vnoremap <f2> <nop>
-nnoremap <f3> <Esc>:Ack!
-inoremap <f3> <nop>
-vnoremap <f3> <nop>
+
+" map f1 to NOP so we dont display help
+nnoremap <f1> <esc>
+inoremap <f1> <esc>
+vnoremap <f1> <esc>
+
+" let f2 + f3 do notrhing for now 
+nnoremap <f2> <esc>
+inoremap <f2> <esc>
+vnoremap <f2> <esc>
+nnoremap <f3> <esc>
+inoremap <f3> <esc>
+vnoremap <f3> <esc>
+
 
 " show git status
 nnoremap <f5> :Gstatus<cr>
@@ -519,8 +515,8 @@ vnoremap <f5> <nop>
 nmap <f6> <Plug>RStart
 inoremap <f6> <nop>
 vnoremap <f6> <nop>
-" start latexmk
-nnoremap <f7> :Latexmk<cr>
+" source an R file
+nnoremap <f7> :RSourceFile<cr>
 inoremap <f7> <nop>
 vnoremap <f7> <nop>
 
@@ -535,7 +531,7 @@ nnoremap <F12> :set wrap!<CR>
 " nnoremap <F12> :RainbowParenthesesToggle<cr>
 
 " Other hotkeys
-nnoremap <C-x> :Sayonara<cr>
+nnoremap <C-x> :Sayonara!<cr>
 " Use CTRL-S for saving, also in insert mode, we always end in normal
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
@@ -544,11 +540,11 @@ inoremap <C-S> <C-C>:update<CR>
 nmap <C-y> gccj
 vmap <C-y> gc
 " print
-nmap <silent> <localleader>p :hardcopy >~/.cache/vim/lastprint.ps<cr>:!xdg-open ~/.cache/vim/lastprint.ps &<cr>
+" nmap <silent> <localleader>p :hardcopy >~/.cache/vim/lastprint.ps<cr>:!xdg-open ~/.cache/vim/lastprint.ps &<cr>
 " enter works in normal mode
 " nnoremap <cr> i<Enter><Esc>
 " ctrl-tab for omni completion
-inoremap <S-tab> <C-x><C-o>
+" inoremap <S-tab> <C-x><C-o>
 
 augroup rnw_fix_spell
    autocmd!
@@ -626,3 +622,48 @@ augroup END
 "
 " editing
 " c%: change matching stuff, changes everyting until a "match" occurs so foooooo(blaaaaaaa)
+"
+"
+" FRAGEN
+" wieso kommen die sachen mit CTRL-O manchmal oben nicht in die buffer list wie beim dirvish?
+" hat das was mit der rkonsole zu tun und dem buffer split?
+" ---> keys für den buffer ausmachen, ist außerdem ein bug, miche guckt nach
+"
+" die r konsole verschwinder immet mal wieder wenn man in den buffern rumklickt. wie macht man die scihtbar oder schaltet sie in den hintergrund?
+"
+" kommando für Far, um replace zu togglen in der preview?
+"
+" wie macht man far nur auf ein sbestimmtes verzeichnis?
+"
+" man braucht echt einen key um das autocomplete selber zu triggern. und in R werden namen aus der aktuellen date einfach nicht angezeigt
+"
+"
+"
+" mal vim bessere keys lernen. 
+" - edit am ender der zeile
+" - edit below
+" - paste below 
+" - edit an einer bestimmten stelle
+"
+"
+" wie kann man die reihenfolge der buffer obven ändern
+" --- > weiß michel auch nicht
+"
+" der R language server stürzt stzändig ab, dann blockt auch der editor
+" LanguageClient proSegmentation fault (core dumped)  
+" ---> erstmal ausmachen? update von vim?
+"
+" michel [5:41 PM]
+" https://github.com/ryanoasis/nerd-fonts
+" Ich benutze Hack"
+"
+" wie kann man search replace nur in den lines machen die visuell markiert worden sind?
+"
+" https://coderwall.com/p/crj69a/from-a-useless-git-diff-to-a-useful-one"
+"
+"
+" mein Rterminal soll immer an einer stelle auftaucehn, nicht mal links mal rechts.
+" und ich brauche einen key für resize
+
+" fragen:
+" wie renamed / moved man files schnell

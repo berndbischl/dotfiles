@@ -54,7 +54,9 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('vim-scripts/ReplaceWithRegister') " replace motion with register using gr<motion>
     call dein#add('Shougo/neosnippet.vim') " Snippet engine
     call dein#add('Shougo/neosnippet-snippets', {'depends' : 'neosnippet.vim'}) " Snippets
-    call dein#add('mhinz/vim-sayonara', { 'on_cmd' : 'Sayonara' })
+    call dein#add('qpkorr/vim-bufkill')
+    " sayonara only seems to allow to mark a buffer with bd. then the buffer becomes unlisted. then denite will open this in 'unlisted' mode and will not be displayed in airline
+    " call dein#add('mhinz/vim-sayonara', { 'on_cmd' : 'Sayonara' })
     call dein#add('brooth/far.vim', {'on_cmd' : ['Far', 'FarDo', 'Farundo']}) " Find And Replace
     " call dein#add('w0rp/ale') " Linting
 
@@ -450,8 +452,8 @@ if dein#tap('nvim-miniyank')
 endif
 
 if dein#tap('far.vim')
-    let g:far#window_layout = 'tab'
-    let g:far#source = 'rg'
+    let g:far#window_layout = 'top'
+    " let g:far#source = 'rg'
 
 endif
 
@@ -459,13 +461,13 @@ if dein#tap('vim-gitgutter')
     set updatetime=100      " ensure that gitgutter updates quickly enough     
 endif
 
-if dein#tap('vim-sayonara')
-    let g:sayonara_confirm_quit = 1   " make sayonare ask before it deletes the last buffer and quits vim 
-    " if we are in the rterminal window, kill the buffer and the window
-    let g:sayonara_filetypes = {
-        \ 'rterminal': 'bdelete!',    
-        \ }
-endif
+" if dein#tap('vim-sayonara')
+"     let g:sayonara_confirm_quit = 1   " make sayonare ask before it deletes the last buffer and quits vim 
+"     " if we are in the rterminal window, kill the buffer and the window
+"     let g:sayonara_filetypes = {
+"         \ 'rterminal': 'bdelete!',    
+"         \ }
+" endif
 
 " ======================================================================================================================
 " Colorscheme / Terminal
@@ -541,12 +543,13 @@ nnoremap <F12> :set wrap!<CR>
 " nnoremap <F12> :RainbowParenthesesToggle<cr>
 
 " Other hotkeys
-" CTRL-x to close buffer with sayonara!, keep the current window (as we have other stuff open and dont want to fuckup the layout)
+" CTRL-x to close buffer with bufill, keep the current window (as we have other stuff open and dont want to fuckup the layout)
 " this is the default we basically apply to any open file
-nnoremap <C-x> :Sayonara!<cr>
-" shift-x to close buffer AND the window, if we want to change splits
-" we shouldnt really need this, as this should nbe handled by our Sayonara dictionary 
-nnoremap <s-x> :Sayonara<cr>
+nnoremap <C-x> :BW!<cr>
+" shift-x to wipe buffer AND the window, if we want to change splits
+nnoremap <s-x> :bw!<cr>
+" close rterminal with CTRL-X and delete the window
+autocmd FileType rterminal nnoremap <C-x> :bw!<cr>
 " Use CTRL-S for saving, also in insert mode, we always end in normal
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
@@ -686,3 +689,19 @@ augroup END
 "
 " kann man irgendwie supper schnell einen git diff der aktuellen file sehen?
 "
+" noch bessere keys für das window resizen setzen muss links recht und rauf runter geben
+
+" key to revert single lines, with fugitive
+" vmap <silent> u <esc>:Gdiff<cr>gv:diffget<cr><c-w><c-w>ZZ
+"
+"
+" ALE ansehen für linting. supports R
+"
+"        *airline-hunks*" anmachen?
+"
+"
+  "
+  "
+  "  wir können bei der airline:table auch per exclude die anzeige von bestimmten filetypes excluden
+  "
+" bei far und fugitive sollten wie in extra neue tabs gehen

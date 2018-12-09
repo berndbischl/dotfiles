@@ -9,6 +9,8 @@
 --ignore-dir=mlrMBO.Rcheck
 --ignore-dir=parallelMap.Rcheck
 --ignore-dir=ParamHelpers.Rcheck
+--ignore-dir=man
+--ignore-dir=docs
 
 
 

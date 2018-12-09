@@ -158,6 +158,7 @@ links:
 	ln -fs ~/cos/dotfiles/.openml ~/.openml
 	ln -fs ~/cos/dotfiles/bin ~/bin
 	ln -fs ~/cos/dotfiles/.rt/packages ~/.rt/packages
+	ln -fs ~/cos/dotfiles/.ackrc ~/.ackrc
 
 
 fzf:

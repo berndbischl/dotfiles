@@ -452,9 +452,13 @@ if dein#tap('nvim-miniyank')
 endif
 
 if dein#tap('far.vim')
-    let g:far#window_layout = 'top'
+    let g:far#window_layout = 'tab'
     " let g:far#source = 'rg'
+    autocmd FileType far_vim setlocal nobuflisted   " make far buffer not listed
+endif
 
+if dein#tap('far.fugitive')
+    autocmd FileType gitcommit setlocal nobuflisted   " make fugitive commit buffer not listed
 endif
 
 if dein#tap('vim-gitgutter')
@@ -498,10 +502,15 @@ endif
 " go to left/right buffer with shift-arrow
 nmap <silent> <S-Left> :bp<CR>
 nmap <silent> <S-Right> :bn<CR>
+" go to split window with ctrl-arrow (u/d/l/r) 
 noremap <silent> <C-Left> :wincmd h<cr>
 noremap <silent> <C-Right> :wincmd l<cr>
 noremap <silent> <C-Up> :wincmd k<cr>
 noremap <silent> <C-Down> :wincmd j<cr>
+" go to left/right tab with ctrl-shift-arrow
+nnoremap <silent> <c-s-left> :tabprev<cr>
+nnoremap <silent> <c-s-right> :tabnext<cr>
+
 nnoremap <f1> <c-w>5<
 nnoremap <f2> <c-w>5>
 
@@ -520,7 +529,7 @@ vnoremap <f3> <esc>
 
 
 " show git status
-nnoremap <f5> :Gstatus<cr>
+nnoremap <f5> :tabedit %<cr>:Gstatus<cr>
 inoremap <f5> <nop>
 vnoremap <f5> <nop>
 " start r console"
@@ -545,11 +554,13 @@ nnoremap <F12> :set wrap!<CR>
 " Other hotkeys
 " CTRL-x to close buffer with bufill, keep the current window (as we have other stuff open and dont want to fuckup the layout)
 " this is the default we basically apply to any open file
-nnoremap <C-x> :BW!<cr>
+nnoremap <C-x> :BW<cr>
 " shift-x to wipe buffer AND the window, if we want to change splits
-nnoremap <s-x> :bw!<cr>
+nnoremap <s-x> :bw<cr>
+" ctrl-shift-x to close a tab (we use this for FAR and fugitive/gstatus)
+nnoremap <c-s-x> :tabclose<cr>
 " close rterminal with CTRL-X and delete the window
-autocmd FileType rterminal nnoremap <C-x> :bw!<cr>
+" autocmd FileType rterminal nnoremap <C-x> :bw!<cr>
 " Use CTRL-S for saving, also in insert mode, we always end in normal
 noremap <C-S> :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
@@ -667,7 +678,8 @@ augroup END
 "
 "
 " wie kann man die reihenfolge der buffer obven ändern
-" --- > weiß michel auch nicht
+" --- > weiß michel auch nicht. geht nicht wirklich da buffer numbers statisch sind. 
+"       einzige chance ist zumachen und aufmachen, dann erscheinen die rechts
 "
 " der R language server stürzt stzändig ab, dann blockt auch der editor
 " LanguageClient proSegmentation fault (core dumped)  
@@ -699,9 +711,9 @@ augroup END
 "
 "        *airline-hunks*" anmachen?
 "
+  "
 "
-  "
-  "
-  "  wir können bei der airline:table auch per exclude die anzeige von bestimmten filetypes excluden
-  "
-" bei far und fugitive sollten wie in extra neue tabs gehen
+" irgendwie funktioniert mein autrocommand bei der rconsole nicht für ctrl-x
+"
+"
+

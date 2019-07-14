@@ -15,7 +15,8 @@ options(
   mc.cores = parallel::detectCores(),
   devtools.revdep.libpath = "~/revdep_libs",
   browserNLdisabled = TRUE, # better whitespace handling in browser
-  java.parameters="-Xrs" # so rJava does not kill session on CTRL-C
+  java.parameters="-Xrs", # so rJava does not kill session on CTRL-C
+  languageserver.default_linters = list()  # disable linting in vim, at some point we could do our own
 )
 
 ### set locales

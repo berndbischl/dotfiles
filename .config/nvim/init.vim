@@ -19,7 +19,7 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('dietsche/vim-lastplace') " restore cursor position at start
 
     " Appearance
-    call dein#add('morhetz/gruvbox')
+    call dein#add('gruvbox-community/gruvbox')
     call dein#add('icymind/NeoSolarized')
     call dein#add('chriskempson/vim-tomorrow-theme')
     call dein#add('NLKNguyen/papercolor-theme')
@@ -36,11 +36,11 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
     " call dein#add('ponko2/deoplete-fish')
     call dein#add('ujihisa/neco-look') " word complete from dictionaries 
-    " call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
+    call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
 
     " Edit helpers
     call dein#add('editorconfig/editorconfig-vim') " Support for editorconfig
-    call dein#add('matze/vim-move') " Move lines with <c-h> etc
+    call dein#add('matze/vim-move') " Move lines around with a single keystroke
     call dein#add('svermeulen/vim-easyclip')  " better copy-paste with dd, ss, and mm, etc
     call dein#add('itspriddle/vim-stripper', {'on_cmd' : 'Stripper'}) " Remove trailing whitespace
     call dein#add('christoomey/vim-titlecase') " switch titlecase with gt+movement
@@ -371,7 +371,7 @@ endif
 if dein#tap('Nvim-R')
     let R_rconsole_width = 70                 " ensure that we always getting a vertical split by using a low nr here 
     let R_min_editor_width = 18               " ensure that we always getting a vertical split by using a low nr here  
-    let g:R_complete = 2                      " omni-completion : always include names of objects
+    " let g:R_complete = 2                      " omni-completion : always include names of objects
     let g:R_assign =0                         " disable underscore replacement.
     let g:R_close_term = 1                    " Close terminal buffer after R quited 
     let g:R_in_buffer = 1                     " Run R in Vim/Neovim built in terminal emulator
@@ -421,16 +421,16 @@ endif
 
 if dein#tap('vim-easy-align')
     vmap <Enter> <Plug>(EasyAlign)
-    xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
+    xmap ga <Plug>(EasyAlign)
 endif
 
 if dein#tap('vim-move')
     let g:move_map_keys = 0
-    nmap <C-j> <Plug>MoveLineDown
-    nmap <C-k> <Plug>MoveLineUp
-    vmap <C-j> <Plug>MoveBlockDown
-    vmap <C-k> <Plug>MoveBlockUp
+    nmap <c-PageDown> <Plug>MoveLineDown
+    nmap <C-PageUp> <Plug>MoveLineUp
+    vmap <C-PageDown> <Plug>MoveBlockDown
+    vmap <C-PageUp> <Plug>MoveBlockUp
 endif
 
 if dein#tap('ale')
@@ -476,7 +476,7 @@ endif
 " Colorscheme / Terminal
 " ======================================================================================================================
 set background=dark
-set t_Co=256
+" set t_Co=256
 if has("termguicolors")
     set termguicolors
 endif
@@ -485,7 +485,9 @@ if !empty($KONSOLE_PROFILE_NAME)
     set guicursor=
 endif
 
+
 if dein#tap('gruvbox')
+    let g:gruvbox_italic=1
     colorscheme gruvbox
     hi! link rPreProc GruvboxBlue
     hi! link rFunction GruvboxAqua
@@ -495,6 +497,9 @@ if dein#tap('gruvbox')
     hi! link rOperator GruvBoxBlue
     hi! link rDelimiter GruvboxFg3
 endif
+" this enables underline instead of undercurl to highlight spell errors
+" without this spellerrors are not display at all of i use nvim in tmux
+hi SpellBad gui=underline
 
 
 " Arrow keys
@@ -590,6 +595,15 @@ function GitStatusDiff()
     :Git! diff
 endfunction
 
+" # vim navigation / editing
+
+" - navigate in row: a) w to jump a word b) f<char> to jump to next <char>
+" - edit a) i for insert, b) a to append c) o row below d) O row above
+"   " - paste below: P 
+"
+" c%: change matching stuff, changes everyting until a "match" occurs so foooooo(blaaaaaaa)
+" ctrl-pgup/pgdown: move lines or visual block up or down
+
 " command completion
 " type prefix, then wait, select with arrow keys, then hit return
 " how to trigger completion on key?
@@ -614,8 +628,8 @@ endfunction
 " adding a /c asks us for confirm whether we wanna do the replace 
 "
 "
-" search replace over files
-" :Far pattern replacement r 
+" search replace over files (e.g. for all subfiles *.R)
+" :Far pattern replacement **/*.R 
 " :Fardo
 "
 " vim surround
@@ -665,9 +679,6 @@ endfunction
 " zg: add it to dict
 "
 "
-" editing
-" c%: change matching stuff, changes everyting until a "match" occurs so foooooo(blaaaaaaa)
-"
 "
 " FRAGEN
 "
@@ -677,37 +688,26 @@ endfunction
 "  files im project root machen kann
 "
 " man braucht echt einen key um das autocomplete selber zu triggern. und in R werden namen aus der aktuellen date einfach nicht angezeigt
+" michel hat das bei sich auf TAB das möchte ich auch, CTRL-N macht es wohl auf
+" vim option completeopt auch nochmal ansehen
+" STRG X STRG O öffnet die omni completion, von R
 "
-" mal vim bessere keys lernen. 
-" - edit am ender der zeile
-" - edit below
-" - paste below 
-" - edit an einer bestimmten stelle
-"
-"
-" wie kann man die reihenfolge der buffer obven ändern
-" --- > weiß michel auch nicht. geht nicht wirklich da buffer numbers statisch sind. 
-"       einzige chance ist zumachen und aufmachen, dann erscheinen die rechts
-"
-" der R language server stürzt stzändig ab, dann blockt auch der editor
-" LanguageClient proSegmentation fault (core dumped)  
-" ---> erstmal ausmachen? update von vim?
 "
 " michel [5:41 PM]
 " https://github.com/ryanoasis/nerd-fonts
 " Ich benutze Hack"
 " ---> irgendwie sehen die fonts nicht anders aus? ich kann aber auch keine probleme sehen? mal michel fragen?
+"-- wurden aus michels dotfiles kopiert. in ubuntu make tun?
 "
 " https://coderwall.com/p/crj69a/from-a-useless-git-diff-to-a-useful-one"
 
 " fragen:
 " wie renamed / moved man files schnell
+" --> Gmove oder :Move auf den aktuellen buffer, kann aus einem plugin sein. ist aus eunuch.
 "
 " bessere gitgutter movenets next und prev setzen. mal gucken wo man sonst sowas noch hat ",n" usw
 " nmap ]h <Plug>GitGutterNextHunk
 " nmap [h <Plug>GitGutterPrevHunkP
-"
-" kann man irgendwie supper schnell einen git diff der aktuellen file sehen?
 "
 " noch bessere keys für das window resizen setzen muss links recht und rauf runter geben
 
@@ -731,3 +731,34 @@ endfunction
 " alle autocmds sollen in augroups
 "
 " mit einem command git status und git diff in einen temp buffer schreiben
+"
+"
+" den gitstatus und den diff in einem extra buffer anzeigen wäre gut
+" terminal git diff 
+"
+" in tmux move of windows, vielleicht mit alt-pageup down
+"  https://superuser.com/questions/343572/how-do-i-reorder-tmux-windows"
+"
+" capslock auf esc mappen?
+"
+"
+" indentation richtig machen:
+" - ist generell auf 4, wird in der ftplugin für R auf 2 gesetzt (michel)
+" https://github.com/mllg/dotfiles/blob/master/.config/nvim/ftplugin/r.vim
+"
+" hotkey machen um startify nochmal wieder anzuzeigen, michel hat das auf f2
+" generell mal alle options ansehen die michel da bei startify hat
+"
+"
+" man kann ysiw" machen um quoates um alles rumzumachen
+"
+"
+" HIGH PRIO. in RNW wird einfach nix spellchek mäßig underlined wenn man normalen text schreibt. im r code schon in
+" den code chunks?
+" irgendwie muss man IMMER nnoch "syntax spell toplevel" manuell eingeben?
+"
+"
+" we bekommt man mit einen schnnellen befehl, key die rkonsole von rechts UNTER das textfenster?
+"
+" code folding MUSS aus sein. das nervt
+"

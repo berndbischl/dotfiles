@@ -36,7 +36,8 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
     " call dein#add('ponko2/deoplete-fish')
     call dein#add('ujihisa/neco-look') " word complete from dictionaries 
-    call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'})
+    " disable languagle client for now seems buggy; i get weird 'code suggestions / hints' in the same line
+    " call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'}) 
 
     " Edit helpers
     call dein#add('editorconfig/editorconfig-vim') " Support for editorconfig
@@ -329,35 +330,86 @@ if dein#tap('fzf.vim')
                 \   <bang>0)
 endif
 
+"if dein#tap('denite.nvim')
+"    nmap <silent> <c-t> :<C-u>Denite file_rec<cr>
+"    nmap <silent> <c-o> :<C-u>DeniteProjectDir file_rec<cr>
+"    nmap <silent> <c-g> :<C-u>Denite grep<cr>
+"    nmap <silent> <leader>b :<C-u>Denite buffer<cr>
+"    nmap <silent> <leader>d :<C-u>Denite directory_rec<cr>
+"    nmap <silent> <leader>y :<C-u>Denite miniyank<cr>
+"    nmap <silent> <leader>m :<C-u>Denite file_mru<cr>
+"    nmap <silent> <leader>u :<C-u>Denite -resume<cr>
+"    nmap <silent> <leader>n :<C-u>Denite -resume -select=+1 -immediately<cr>
+"    nmap <silent> <leader>p :<C-u>Denite -resume -select=-1 -immediately<cr>
+"    nmap <silent> <leader>fw :<C-u>DeniteCursorWord grep<CR><CR><C-W><CR>
+
+"    call denite#custom#map('insert', '<down>', '<denite:move_to_next_line>', 'noremap')
+"    call denite#custom#map('insert', '<up>', '<denite:move_to_previous_line>', 'noremap')
+"    "call denite#custom#option('default', 'statusline', 0)
+"    call denite#custom#source('grep', 'args', ['', '', '!']) " grep interactively
+"    call denite#custom#source('grep', 'sorters', []) " keep sort order of rg
+
+"    if executable('rg')
+"        call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+"        call denite#custom#var('grep', 'command', ['rg'])
+"        call denite#custom#var('grep', 'default_opts', ['--column', '--line-number', '--no-heading'])
+"        call denite#custom#var('grep', 'recursive_opts', [])
+"        call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+"        call denite#custom#var('grep', 'separator', ['--'])
+"        call denite#custom#var('grep', 'final_opts', [])
+"    endif
+"endif
+
+
 if dein#tap('denite.nvim')
-    nmap <silent> <c-t> :<C-u>Denite file_rec<cr>
-    nmap <silent> <c-o> :<C-u>DeniteProjectDir file_rec<cr>
-    nmap <silent> <c-g> :<C-u>Denite grep<cr>
+    function! s:denite_my_settings() abort
+        nnoremap <silent><buffer><expr> <CR>
+        \ denite#do_map('do_action')
+        nnoremap <silent><buffer><expr> d
+        \ denite#do_map('do_action', 'delete')
+        nnoremap <silent><buffer><expr> p
+        \ denite#do_map('do_action', 'preview')
+        nnoremap <silent><buffer><expr> q
+        \ denite#do_map('quit')
+        nnoremap <silent><buffer><expr> i
+        \ denite#do_map('open_filter_buffer')
+        nnoremap <silent><buffer><expr> <Space>
+        \ denite#do_map('toggle_select').'j'
+    endfunction
+    autocmd FileType denite call s:denite_my_settings()
+
+    nmap <silent> <c-t> :<C-u>Denite -start-filter file/rec<cr>
+    nmap <silent> <c-o> :<C-u>DeniteProjectDir -start-filter file/rec<cr>
+    nmap <silent> <c-g> :<C-u>Denite -start-filter grep<cr>
     nmap <silent> <leader>b :<C-u>Denite buffer<cr>
     nmap <silent> <leader>d :<C-u>Denite directory_rec<cr>
-    nmap <silent> <leader>y :<C-u>Denite miniyank<cr>
+    nmap <silent> <leader>y :<C-u>Denite neoyank<cr>
+    nmap <silent> <leader>t :<C-u>Denite tag<cr>
     nmap <silent> <leader>m :<C-u>Denite file_mru<cr>
     nmap <silent> <leader>u :<C-u>Denite -resume<cr>
-    nmap <silent> <leader>n :<C-u>Denite -resume -select=+1 -immediately<cr>
-    nmap <silent> <leader>p :<C-u>Denite -resume -select=-1 -immediately<cr>
+    nmap <silent> <leader>n :<C-u>Denite -resume -cursor-pos=+1 -immediately<cr>
+    nmap <silent> <leader>p :<C-u>Denite -resume -cursor-pos=-1 -immediately<cr>
     nmap <silent> <leader>fw :<C-u>DeniteCursorWord grep<CR><CR><C-W><CR>
 
-    call denite#custom#map('insert', '<down>', '<denite:move_to_next_line>', 'noremap')
-    call denite#custom#map('insert', '<up>', '<denite:move_to_previous_line>', 'noremap')
-    "call denite#custom#option('default', 'statusline', 0)
-    call denite#custom#source('grep', 'args', ['', '', '!']) " grep interactively
+	call denite#custom#source('grep', 'args', ['', '', '!'])
     call denite#custom#source('grep', 'sorters', []) " keep sort order of rg
 
     if executable('rg')
-        call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+        call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
         call denite#custom#var('grep', 'command', ['rg'])
-        call denite#custom#var('grep', 'default_opts', ['--column', '--line-number', '--no-heading'])
+        call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
         call denite#custom#var('grep', 'recursive_opts', [])
         call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
         call denite#custom#var('grep', 'separator', ['--'])
         call denite#custom#var('grep', 'final_opts', [])
     endif
+
+    if executable('fd')
+        call denite#custom#var('file/rec', 'command', ['fd', '--type', 'f', '--follow', '--hidden', '--exclude', '.git', ''])
+    endif
 endif
+
+
 
 if dein#tap('neosnippet.vim')
     let g:neosnippet#snippets_directory = expand('~/.config/nvim/neosnippets')

@@ -118,7 +118,7 @@ set lazyredraw
 set encoding=utf-8
 set fileformats+=mac
 set nrformats-=octal
-set printoptions=paper:A4,number:y
+" set printoptions=paper:A4,number:y
 set title
 set undofile
 set showmatch
@@ -287,7 +287,8 @@ if dein#tap('deoplete.nvim')
     call deoplete#custom#option('auto_complete_delay', 1000)
     set shortmess+=c
     let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_smart_case = 1
+    call deoplete#custom#option('smart_case', v:true)
+    " let g:deoplete#enable_smart_case = 1
     " let g:deoplete#_keyword_patterns = {'_' : '[a-zA-Z_ÄÖÜäöüß]\k*'}
 
     call deoplete#custom#option('omni_patterns', {

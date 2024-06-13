@@ -90,9 +90,12 @@ stty -ixon
 EDITOR=/usr/bin/vim
 export EDITOR=/usr/bin/vim
 
+# maps capslock to escape, i guess for vim, but we might need X for that?
 setxkbmap -option caps:escape
 
-. /usr/share/autojump/autojump.sh
+# . /usr/share/autojump/autojump.sh
+[[ -s /home/bischlb/.autojump/etc/profile.d/autojump.sh ]] && source /home/bischlb/.autojump/etc/profile.d/autojump.sh
+
 source ~/.fzf.bash
     
 # add rt to path

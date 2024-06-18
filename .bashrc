@@ -91,7 +91,9 @@ EDITOR=/usr/bin/vim
 export EDITOR=/usr/bin/vim
 
 # maps capslock to escape, i guess for vim, but we might need X for that?
-setxkbmap -option caps:escape
+# this also seems to screw up my keyboard language now in some apps
+# "WARNING: Running setxkbmap against an XWayland server"
+#setxkbmap -option caps:escape
 
 # . /usr/share/autojump/autojump.sh
 [[ -s /home/bischlb/.autojump/etc/profile.d/autojump.sh ]] && source /home/bischlb/.autojump/etc/profile.d/autojump.sh

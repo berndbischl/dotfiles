@@ -31,11 +31,11 @@ if dein#load_state(expand('~/.cache/dein'))
     call dein#add('kshenoy/vim-signature') " Show marks
 
     " Completion
-    call dein#add('Shougo/deoplete.nvim') " Completion
-    call dein#add('Shougo/neco-vim') " vim completion
-    call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
+    " call dein#add('Shougo/deoplete.nvim') " Completion
+    " call dein#add('Shougo/neco-vim') " vim completion
+    " call dein#add('wellle/tmux-complete.vim') " complete with words from other panes
     " call dein#add('ponko2/deoplete-fish')
-    call dein#add('ujihisa/neco-look') " word complete from dictionaries 
+    " call dein#add('ujihisa/neco-look') " word complete from dictionaries 
     " disable languagle client for now seems buggy; i get weird 'code suggestions / hints' in the same line
     " call dein#add('autozimu/LanguageClient-neovim', {'rev': 'next', 'build': 'bash install.sh'}) 
 

@@ -1,0 +1,84 @@
+
+tmux:
+  create new pane               : alt c
+  next window                   : alt left/right
+  switch pane                   : alt up/down
+  split hori.                   : alt-h
+  split vert.                   : alt-v
+  kill pane                     : alt-x
+  kill-session                  : alt-q
+  swap current pane             : tmux swap-pane -t 3
+  enter cmd                     : CTRL a :
+  shift in tmux für mouse copy
+
+general:
+  cycle focus thru windows      : CTRL-left and right
+  move between buffers          : shift-left and right 
+  save file                     : CTRL-s  
+  close buffer                  : ctrl-x
+  FIXME: remap capslock
+  FIXME: how to display hidden files in neotree
+  FIXME: doesnt work
+  Resize windows            : use mouse
+  open neotree                  : leader-e
+  open files with fuzzy search  : leader-ff
+
+
+F-Keys
+  F9  : spell checking
+  F10 : clear search highlighting
+  F11 : invisible symbols
+  F12 : toggle wrap mode
+
+neotree
+  go to ..                  : bckspc  
+  create new file at pos    : a
+  add "/" at end for dir
+  rename file under line    : r
+  del file under line       : d
+
+Editing
+  redo action               : Go to insert, type it in, ESC. Then hit . at similar place in code.
+  move 1 word forward       : w
+  move to 1st line          : gg
+  move to last line         : G
+  move to line 42           : 42gg
+  change word (start)       : cw
+  change word (anywhere)    : ciw
+  Replace line with yanked  : Vp
+  delete till end           : dG
+  block comment : use vimcommentary, then gc and bla
+  move wrt sentences        : ( and )
+  move wrt bloc             : { and }
+  yank line                 : yy
+  yank 3 lines              : 3yy
+  yank word                 : yw
+  delete line               : dd
+  delete 3 lines            : 3dd
+  delete word               : dw
+  delete all in block       : di}
+  delete all in quotes      : di" / di'
+  change/delete to [char]   : dt[char], z.b.
+  Recording longer sequences:
+  hit <q a>, that starts recording into register a, then do sequence and end with q.
+  <@q a> now plays that sequence back.
+  visual mode               : v for char, V for line, CTRL-V for block
+
+subversive + cutlass
+  replace line yy yank         : ss
+  FIXME: siw doesnt work  
+  to cut current line          : mm
+  cut in visual mode           : m
+  cut until end of line        : M 
+  cut word                     : mw
+
+search and replace
+  search in buf                 : leader-sb
+  search over all files         : leader-ff
+
+flash:
+  jump to location in current file: 
+    "s" for flash, then word part, then the highlighted char to jump there
+
+
+

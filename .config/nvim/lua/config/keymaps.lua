@@ -30,9 +30,9 @@ vim.keymap.set("n", "<C-y>", "gccj", { silent = true, remap = true })
 
 -- subversive
 
--- vim.keymap.set("n", "s", "<plug>(SubversiveSubstitute)", {})
+vim.keymap.set("n", "s", "<plug>(SubversiveSubstitute)", {})
 vim.keymap.set("n", "ss", "<plug>(SubversiveSubstituteLine)", {})
--- vim.keymap.set("n", "S", "<plug>(SubversiveSubstituteToEndOfLine)", {})
+vim.keymap.set("n", "S", "<plug>(SubversiveSubstituteToEndOfLine)", {})
 
 -- cutlass
 

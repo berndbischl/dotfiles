@@ -17,8 +17,6 @@ general:
   save file                     : CTRL-s  
   close buffer                  : ctrl-x
   close window                  : shift-x
-  FIXME: how to display hidden files in neotree
-  FIXME: doesnt work
   Resize windows                : use mouse
   open neotree                  : leader-e
 
@@ -26,7 +24,7 @@ general:
 F-Keys
   F2  : FIXME quickfix list
   F9  : spell checking
-  F10 : clear search highlighting
+  F0 : clear search highlighting
   F11 : invisible symbols
   F12 : toggle wrap mode
 
@@ -37,41 +35,48 @@ neotree
   rename file under line    : r
   del file under line       : d
   help                      : ?
+  toggle hidden             : H
 
 Editing
-  redo action               : Go to insert, type it in, ESC. Then hit . at similar place in code.
+  normal mode               : ESC or caps-lock
+  insert                    : i, a (app), o (row down), O (up)
+  visual mode               : v for char, V for line, CTRL-V for block
   move 1 word forward       : w
   move to 1st line          : gg
   move to last line         : G
   move to line 42           : 42gg
   change word (start)       : cw
   change word (anywhere)    : ciw
+  change until              : c<char>, eg c)
   Replace line with yanked  : Vp
-  delete till end           : dG
   block comment : use vimcommentary, then gc and bla
   move wrt sentences        : ( and )
   move wrt bloc             : { and }
   yank line                 : yy
   yank 3 lines              : 3yy
   yank word                 : yw
+  yank word from inside     : yiw
   delete line               : dd
+  delete till EOL           : D
+  delete till end           : dG
   delete 3 lines            : 3dd
   delete word               : dw
   delete all in block       : di}
   delete all in quotes      : di" / di'
   change/delete to [char]   : dt[char], z.b.
+  redo action               : Go to insert, type it in, ESC. Then hit . at similar place in code.
   Recording longer sequences:
   hit <q a>, that starts recording into register a, then do sequence and end with q.
   <@q a> now plays that sequence back.
-  visual mode               : v for char, V for line, CTRL-V for block
 
 subversive + cutlass
-  replace line yy yank         : ss
-  FIXME: siw doesnt work  
-  to cut current line          : mm
-  cut in visual mode           : m
-  cut until end of line        : M 
-  cut word                     : mw
+  cut current line              : mm
+  cut in visual mode            : m
+  cut until end of line         : M 
+  cut word                      : mw
+  replace line with yy yank     : ss
+  replace word                  : siw
+  replace until EOL             : S
 
 code 
   goto Definition               : gd
@@ -89,8 +94,12 @@ search and replace
   resume                        : <leader>sR	
   jump to a function            : leader-ss
 
+search-replace in current buffer 
+  replace all                   : %s/foo/bar 
+  replace in visual             : '<,'>s/foo/bar   
+  confirm                       : add "/c" at end 
 
-fixme: disable this, rather use s to replace
+######################## old
 flash:
   jump to location in current file: 
     "s" for flash, then word part, then the highlighted char to jump there

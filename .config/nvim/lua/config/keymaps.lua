@@ -9,8 +9,12 @@ vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { silent = true })
 -- ctrl-arrow for windows
 vim.keymap.set("n", "<C-Left>", "<C-w>h", { silent = true })
 vim.keymap.set("n", "<C-Right>", "<C-w>l", { silent = true })
+vim.keymap.set("n", "<C-Up>", "<C-w>k", { silent = true })
+vim.keymap.set("n", "<C-Down>", "<C-w>j", { silent = true })
 -- Ctrl+x to close the current buffer
 vim.keymap.set("n", "<C-x>", ":bp | bd #<CR>", { silent = true })
+-- show fixme quickfix list
+vim.keymap.set("n", "<F2>", ":TodoQuickFix<CR>", { silent = true })
 -- Toggle spellchecking
 vim.keymap.set("n", "<F9>", ":setlocal spell!<CR>", { silent = true })
 -- Clear search results
@@ -19,6 +23,8 @@ vim.keymap.set("n", "<F10>", ":noh<CR>", { silent = true })
 vim.keymap.set("n", "<F11>", ":set list!<CR>", { silent = true })
 -- Toggle wrapping mode
 vim.keymap.set("n", "<F12>", ":set wrap!<CR>", { silent = true })
+-- Map Ctrl+y to toggle comments in Normal and Visual modes
+vim.keymap.set("n", "<C-y>", "gccj", { silent = true, remap = true })
 
 -- subversive
 

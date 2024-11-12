@@ -25,6 +25,7 @@ general:
 
 
 F-Keys
+  F2  : FIXME quickfix list
   F9  : spell checking
   F10 : clear search highlighting
   F11 : invisible symbols
@@ -36,6 +37,7 @@ neotree
   add "/" at end for dir
   rename file under line    : r
   del file under line       : d
+  help                      : ?
 
 Editing
   redo action               : Go to insert, type it in, ESC. Then hit . at similar place in code.
@@ -73,8 +75,14 @@ subversive + cutlass
   cut word                     : mw
 
 search and replace
-  search in buf                 : leader-sb
-  search over all files         : leader-ff
+  find files                    : leader-space 
+  search in buf                 : /
+  search with grp               : leader-sg
+
+code
+  go to def                     : leader-gd
+  jump to a function            : leader-ss
+  
 
 flash:
   jump to location in current file: 

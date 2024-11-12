@@ -13,6 +13,8 @@ vim.keymap.set("n", "<C-Up>", "<C-w>k", { silent = true })
 vim.keymap.set("n", "<C-Down>", "<C-w>j", { silent = true })
 -- Ctrl+x to close the current buffer
 vim.keymap.set("n", "<C-x>", ":bp | bd #<CR>", { silent = true })
+-- shift+x to close the current buffer
+vim.keymap.set("n", "<S-x>", "<Cmd>close<CR>", { desc = "Close current window" })
 -- show fixme quickfix list
 vim.keymap.set("n", "<F2>", ":TodoQuickFix<CR>", { silent = true })
 -- Toggle spellchecking

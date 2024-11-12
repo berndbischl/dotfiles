@@ -1,6 +1,9 @@
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
 
+-- disable annoyng swap files
+vim.o.swapfile = false
+
 vim.diagnostic.config({
   update_in_insert = false, -- Only show diagnostics after leaving insert mode
   virtual_text = true, -- show diag messages

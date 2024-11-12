@@ -99,6 +99,12 @@ search-replace in current buffer
   replace in visual             : '<,'>s/foo/bar   
   confirm                       : add "/c" at end 
 
+
+Spectre:                                                            
+ex1: 
+TreeRegr tree(.)\(data, ctrl\)                                      
+TreeRegr tree$1\(ctrl\)                                             
+
 ######################## old
 flash:
   jump to location in current file: 

@@ -24,8 +24,9 @@ general:
 
 F-Keys
   F2  : FIXME quickfix list
+  F8  : toggles inlay hints (args etc)
   F9  : spell checking
-  F0 : clear search highlighting
+  F10 : clear search highlighting
   F11 : invisible symbols
   F12 : toggle wrap mode
 

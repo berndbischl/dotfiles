@@ -35,6 +35,21 @@ vim.keymap.set("n", "<F12>", ":set wrap!<CR>", { silent = true })
 -- Map Ctrl+y to toggle comments in Normal and Visual modes
 vim.keymap.set("n", "<C-y>", "gccj", { silent = true, remap = true })
 
+-- Map F8 to toggle inlay hints
+local inlay_hints_enabled = false
+
+function ToggleInlayHints()
+  inlay_hints_enabled = not inlay_hints_enabled
+  vim.lsp.inlay_hint.enable(inlay_hints_enabled)
+end
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<F8>",
+  ":lua ToggleInlayHints()<CR>",
+  { noremap = true, silent = true, desc = "Toggle Inlay Hints" }
+)
+
 -- subversive
 
 vim.keymap.set("n", "s", "<plug>(SubversiveSubstitute)", {})

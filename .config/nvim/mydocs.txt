@@ -19,6 +19,7 @@ general:
   close window                  : shift-x
   Resize windows                : use mouse
   open neotree                  : leader-e
+  resize windows                : leader+arrows
 
 
 F-Keys

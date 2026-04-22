@@ -98,8 +98,12 @@ source ~/.fzf.bash
 
 # add rt to path
 PATH="/home/bischl/.R/library/rt/bin:$PATH"
+export R_BINARY_REPO="https://packagemanager.posit.co/cran/__linux__/jammy/latest"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ]; then
   PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
+
+export R_INCLUDE_DIR=/usr/share/R/include
+. "$HOME/.cargo/env"

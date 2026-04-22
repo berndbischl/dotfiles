@@ -43,3 +43,15 @@ if (interactive()) {
 }
 
 
+# Hotfix languageserver: ignore virtual URIs for diagnostics
+setHook(packageEvent("languageserver", "onLoad"), function(ns) {
+  orig <- get("diagnose_file", envir = ns)
+  unlockBinding("diagnose_file", ns)
+  ns$diagnose_file <- function(uri, content, is_rmarkdown = FALSE, globals = NULL, cache = FALSE) {
+    if (!is.character(uri) || length(uri) != 1L) return(list())
+    if (grepl("^(git:|vscode-|gitlens:|scm:)", uri)) return(list())
+    if (!startsWith(uri, "file:")) return(list())
+    orig(uri, content, is_rmarkdown, globals, cache)
+  }
+  lockBinding("diagnose_file", ns)
+})

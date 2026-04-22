@@ -14,5 +14,9 @@
     }
   },
   "effortLevel": "high",
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/bischl/cos/dotfiles/.claude/statusline-command.sh"
+  }
 }

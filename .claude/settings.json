@@ -1,0 +1,18 @@
+{
+  "enabledPlugins": {
+    "slds-lecture-skills@wintermute": true,
+    "slds-paper-skills@wintermute": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "wintermute": {
+      "source": {
+        "source": "git",
+        "url": "git@github.com:slds-lmu/wintermute.git"
+      },
+      "autoUpdate": true
+    }
+  },
+  "effortLevel": "high",
+  "voiceEnabled": true
+}
